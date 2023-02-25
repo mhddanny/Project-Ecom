@@ -29,6 +29,7 @@ DEBUG = config('DEBUG', default=True, cast=bool) #True
 
 ALLOWED_HOSTS = [
     'ec2-35-166-148-8.us-west-2.compute.amazonaws.com',
+    '35.166.148.8',
     '*'
 ]
 
