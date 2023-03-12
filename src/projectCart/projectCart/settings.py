@@ -122,7 +122,8 @@ DATABASES = {
         'NAME': 'projectCart',
         'USER': 'danny95',
         'PASSWORD': 'Sukses2023',
-        'HOST': 'database-1.cct7dqrpfmm5.us-west-2.rds.amazonaws.com',
+        # 'HOST': 'database-1.cct7dqrpfmm5.us-west-2.rds.amazonaws.com',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
