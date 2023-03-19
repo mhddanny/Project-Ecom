@@ -3,12 +3,14 @@ from category.models import Category
 from accounts.models import Account
 from django.urls import reverse
 from django.db.models import Avg, Count
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Product(models.Model):
     product_name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     description = models.TextField(max_length=500, blank=True)
+    long_description = RichTextField(blank=True, null=True)
     price = models.IntegerField()
     images = models.ImageField(upload_to='photos/products')
     stock = models.IntegerField()
