@@ -65,4 +65,39 @@
 </section>
 <!-- ========================= SECTION  END// ========================= -->
 
+<!-- ========================= SECTION NEW PRODUCTS ========================= -->
+<section class="section-name padding-y-sm">
+	<div class="container">
+		<header class="section-heading">
+			<h3 class="section-title">New Products</h3>
+		</header><!-- sect-heading -->
+
+		<div class="row">
+			{% for obj in new_product %}
+			<div class="col-md-3">
+				<div class="card card-product-grid">
+					<a href="{{  obj.get_url }}" class="img-wrap"> <img src="{{ obj.images.url }}"> </a>
+					<figcaption class="info-wrap">
+						<a href="./product-detail.html" class="title">{{obj.product_name}}</a>
+						<div class="price mt-1">Rp. {{obj.price}}</div> <!-- price-wrap.// -->
+						<div class="rating-star">
+							<span>
+								<i class="fa fa-star{% if obj.avrageReview < 0.5 %}-o{% elif obj.avrageReview >= 0.5 and obj.avrageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+								<i class="fa fa-star{% if obj.avrageReview < 1.5 %}-o{% elif obj.avrageReview >= 1.5 and obj.avrageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+								<i class="fa fa-star{% if obj.avrageReview < 2.5 %}-o{% elif obj.avrageReview >= 2.5 and obj.avrageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+								<i class="fa fa-star{% if obj.avrageReview < 3.5 %}-o{% elif obj.avrageReview >= 3.5 and obj.avrageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+								<i class="fa fa-star{% if obj.avrageReview < 4.5 %}-o{% elif obj.avrageReview >= 4.5 and obj.avrageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+							</span>
+						</div>
+					</figcaption>
+				</div>
+			</div> <!-- col.// -->
+				
+			{% endfor %}
+		</div> <!-- row.// -->
+
+	</div><!-- container // -->
+</section>
+<!--========================= SECTION  END// ========================= -->
+
 {% endblock content %}

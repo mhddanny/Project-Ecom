@@ -48,6 +48,7 @@
                         <p>{{single_product.description}}</p>
                         <p>{{single_product.long_description | safe}}</p>
                         <hr>
+                        <!-- Varian Color -->
                         <div class="row">
                             <div class="item-option-select">
                                 <h6>Choose Color</h6>
@@ -59,6 +60,7 @@
                                  </select> 
                             </div>
                         </div> <!-- row.// -->
+                        <!-- Varian Sizes -->
                         <div class="row">
                             <div class="item-option-select">
                                 <h6>Select Size</h6>
@@ -76,7 +78,7 @@
                         {% else %}
                             <!-- <button type="submit" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </button> -->
                             <a class="btn btn-outline-primary" href="https://linktr.ee/ar_rasyiid"><i class="fas fa-shopping-cart"></i></i> Buy</a>
-                            <a class="btn btn-outline-success" href="http://wa.me/+6281211143508"><i class="fab fa-whatsapp" ></i> Chat Whatsapp</a>
+                            <a class="btn btn-outline-success" href="http://wa.me/+6281211143508"><i class="fab fa-whatsapp" ></i> Chat</a>
                         {% endif %}
                     </article> <!-- product-info-aside .// -->
                 </form>
@@ -84,6 +86,33 @@
         </div> <!-- row.// -->
     </div> <!-- card.// -->
     <!-- ============================ COMPONENT 1 END .// ================================= -->
+
+    <br><br>
+    <!-- Produck Serupa -->
+    <h3 class="section-title">Similar Products</h3><br>
+    <div class="row col-mb-3">
+        {% for obj in products %}
+        <div class="col-md-3">
+            <div class="card card-product-grid">
+                <a href="{{  obj.get_url }}" class="img-wrap"> <img src="{{ obj.images.url }}"> </a>
+                <figcaption class="info-wrap">
+                    <a href="./product-detail.html" class="title">{{obj.product_name}}</a>
+                    <div class="price mt-1">Rp. {{obj.price}}</div> <!-- price-wrap.// -->
+                    <div class="rating-star">
+                        <span>
+                            <i class="fa fa-star{% if obj.avrageReview < 0.5 %}-o{% elif obj.avrageReview >= 0.5 and obj.avrageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if obj.avrageReview < 1.5 %}-o{% elif obj.avrageReview >= 1.5 and obj.avrageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if obj.avrageReview < 2.5 %}-o{% elif obj.avrageReview >= 2.5 and obj.avrageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if obj.avrageReview < 3.5 %}-o{% elif obj.avrageReview >= 3.5 and obj.avrageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if obj.avrageReview < 4.5 %}-o{% elif obj.avrageReview >= 4.5 and obj.avrageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </figcaption>
+            </div>
+        </div> <!-- col.// -->
+            
+        {% endfor %}
+    </div> <!-- row.// -->
     
     <br>
     
@@ -173,11 +202,12 @@
 
         </div> <!-- col.// -->
     </div> <!-- row.// -->
+
+    
     
     
     </div> <!-- container .//  -->
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
-    
     
 {% endblock content %}
