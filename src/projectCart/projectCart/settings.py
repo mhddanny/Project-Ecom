@@ -190,7 +190,7 @@ STATICFILES_DIRS = [
 # DEFAULT_FILE_STORAGE = 'projectCart.media_storages.MediaStorage'
 
 # media File Configuration
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
