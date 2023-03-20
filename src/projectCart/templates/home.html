@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
 <!-- ========================= SECTION MAIN ========================= -->
-<section class="section-intro padding-y-sm">
+<section class="section-intro padding-y-sm py-5">
 	<div class="container">
 		<div id="carouselExampleSlidesOnly" class="carousel slide mb-3" data-ride="carousel">
 			<div class="carousel-inner">
@@ -20,7 +20,37 @@
 			</div>
 			</div>
 		</div>
-		<br>
+
+	</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- Start Categories of The Month -->
+<section class="container py-5">
+	<div class="row text-center pt-3">
+		<div class="col-lg-6 m-auto">
+			<h1 class="h1">Categories of Moslem</h1>
+			<p>
+				Temukan pakain style dan trendi namun
+				tetap Syariah.
+			</p>
+		</div>
+	</div>
+	<div class="row">
+		{% for category in links %}
+		<div class="col-12 col-md-4 p-5 mt-3">
+			<a href="{{ category.get_url }}"><img src="{{category.cat_image.url}}" class="rounded-circle img-fluid border" style="width: 300px;"></a>
+			<h5 class="text-center mt-3 mb-3">{{category.category_name}}</h5>
+			<p class="text-center"><a href="{{ category.get_url }}" class="btn btn-primary">Go Shop</a></p>
+		</div>
+		{% endfor %}
+	</div>
+</section>
+<!-- End Categories of The Month -->
+
+<!-- ========================= SECTION MAIN ========================= -->
+<section class="section-intro padding-y-sm py-5">
+	<div class="container">
 		<div class="intro-banner-wrap mb-3">
 			<img src="{% static 'images/banners/banner_4.png' %}" class="img-fluid rounded">
 		</div>
@@ -34,7 +64,7 @@
 	<div class="container">
 		<header class="section-heading">
 			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-			<h3 class="section-title">Popular products</h3>
+			<h3 class="section-title text-center">Popular products</h3>
 		</header><!-- sect-heading -->
 
 		<div class="row">
@@ -66,7 +96,7 @@
 <!-- ========================= SECTION  END// ========================= -->
 
 <!-- ========================= SECTION NEW PRODUCTS ========================= -->
-<section class="section-name padding-y-sm">
+<section class="section-name padding-y-sm py-5">
 	<div class="container">
 		<header class="section-heading">
 			<h3 class="section-title">New Products</h3>
