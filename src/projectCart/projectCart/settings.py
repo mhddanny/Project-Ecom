@@ -44,12 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'accounts',
-    'ckeditor',
     'category',
     'store',
     'carts',
     'orders',
     'admin_honeypot',
+    'ckeditor',
     'storages',
 ]
 
