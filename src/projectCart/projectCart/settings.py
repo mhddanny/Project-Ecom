@@ -49,8 +49,8 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'admin_honeypot',
-    'ckeditor',
     'storages',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
