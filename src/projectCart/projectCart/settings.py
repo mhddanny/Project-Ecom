@@ -43,14 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'category',
     'accounts',
+    'ckeditor',
+    'category',
     'store',
     'carts',
     'orders',
     'admin_honeypot',
     'storages',
-    'ckeditor',
 ]
 
 MIDDLEWARE = [
