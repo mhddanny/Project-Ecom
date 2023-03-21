@@ -25,28 +25,6 @@
 </section>
 <!-- ========================= SECTION MAIN END// ========================= -->
 
-<!-- Start Categories of The Month -->
-<section class="container py-5">
-	<div class="row text-center pt-3">
-		<div class="col-lg-6 m-auto">
-			<h1 class="h1">Categories of Moslem</h1>
-			<p>
-				Temukan pakain style dan trendi namun
-				tetap Syariah.
-			</p>
-		</div>
-	</div>
-	<div class="row">
-		{% for category in links %}
-		<div class="col-12 col-md-4 p-5 mt-3">
-			<a href="{{ category.get_url }}"><img src="{{category.cat_image.url}}" class="rounded-circle img-fluid border" style="width: 300px;"></a>
-			<h5 class="text-center mt-3 mb-3">{{category.category_name}}</h5>
-			<p class="text-center"><a href="{{ category.get_url }}" class="btn btn-primary">Go Shop</a></p>
-		</div>
-		{% endfor %}
-	</div>
-</section>
-<!-- End Categories of The Month -->
 
 <!-- ========================= SECTION MAIN ========================= -->
 <section class="section-intro padding-y-sm py-5">
