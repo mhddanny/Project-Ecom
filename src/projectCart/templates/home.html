@@ -38,9 +38,9 @@
 	</div>
 	<div class="row">
 		{% for category in links %}
-		<div class="col-12 col-md-4 p-5 mt-3">
-			<a href="{{ category.get_url }}"><img src="{{category.cat_image.url}}" class="rounded-circle img-fluid border" style="width: 300px;"></a>
-			<h5 class="text-center mt-3 mb-3">{{category.category_name}}</h5>
+		<div class="col-12 col-md-3 p-5 mt-3  text-center">
+			<a href="{{ category.get_url }}"><img src="{{category.cat_image.url}}" class="rounded-circle img-fluid border" style="width: 100px;"></a>
+			<h6 class="text-center mt-3 mb-3">{{category.category_name}}</h6>
 			<p class="text-center"><a href="{{ category.get_url }}" class="btn btn-primary">Go Shop</a></p>
 		</div>
 		{% endfor %}
