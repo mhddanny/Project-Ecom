@@ -87,6 +87,21 @@ class ProductGallery(models.Model):
 
     class Meta:
         verbose_name = 'product Gallery'
-        verbose_name_plural = 'product Gallery'    
-        
+        verbose_name_plural = 'product Gallery'  
+
+class ProductPaket(models.Model):    
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
+    max_weight = models.CharField(max_length=150, blank=True)
+    length = models.CharField(max_length=150, blank=True)
+    width = models.CharField(max_length=150, blank=True)
+    height = models.CharField(max_length=150, blank=True)
+
+    def __str__(self):
+        return self.max_weight
+    
+    class Meta:
+        verbose_name = 'Product Paket'
+        verbose_name_plural = 'Product Paket'
+
+
 

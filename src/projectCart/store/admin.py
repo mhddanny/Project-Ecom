@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Product, Variation, ReviewRating, ProductGallery
+from . models import Product, Variation, ReviewRating, ProductGallery, ProductPaket
 import admin_thumbnails
 
 # Register your models here.
@@ -8,11 +8,33 @@ class ProdutGalleryInline(admin.TabularInline):
     model = ProductGallery
     extra = 1
 
+class ProductPaketInline(admin.TabularInline):
+    model = ProductPaket
+    extra = 0
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ["max_weight"],
+            },
+        ),
+        (
+            "Advanced options",
+            {
+                "classes": ["collapse"],
+                "fields": ["length", "width", "height"],
+            },
+        )
+    ]
+    
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     '''Admin View for Product'''
-
+    inlines = [
+        ProdutGalleryInline,
+        ProductPaketInline,
+        ]
     list_display = ('product_name', 'price', 'stock', 'category', 'modifield_date', 'is_available')
     prepopulated_fields = {'slug': ('product_name',)}
     # list_filter = ('',)
@@ -21,7 +43,7 @@ class ProductAdmin(admin.ModelAdmin):
     # search_fields = ('',)
     # date_hierarchy = ''
     # ordering = ('',)
-    inlines = [ProdutGalleryInline]
+    
 
 class VariationAdmin(admin.ModelAdmin):
     list_display = ('product', 'varian_category', 'variation_value', 'is_active')
@@ -31,3 +53,4 @@ admin.site.register(Variation, VariationAdmin)
 
 admin.site.register(ReviewRating)
 admin.site.register(ProductGallery)
+admin.site.register(ProductPaket)

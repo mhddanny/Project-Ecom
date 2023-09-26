@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
-    'admin_honeypot',
+    # 'admin_honeypot',
     'storages',
     'ckeditor',
 ]
@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_session_timeout.middleware.SessionTimeoutMiddleware',#session timeout
+    # 'django_session_timeout.middleware.SessionTimeoutMiddleware',#session timeout
 
 ]
 
@@ -121,8 +121,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'projectCart',
-        'USER': 'danny95',
-        'PASSWORD': 'Sukses2023',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         # 'HOST': 'project.cct7dqrpfmm5.us-west-2.rds.amazonaws.com',
         'HOST': '127.0.0.1',
         'PORT': '5432',
@@ -207,8 +207,8 @@ MESSAGE_TAGS = {
 
 # SMTP configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = ('EMAIL_HOST_PASSWORD')
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT', cast=int)
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = ('EMAIL_HOST_PASSWORD')
