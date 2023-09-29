@@ -29,6 +29,7 @@ class ProductPaketInline(admin.TabularInline):
     
 
 @admin.register(Product)
+@admin_thumbnails.thumbnail('images')
 class ProductAdmin(admin.ModelAdmin):
     '''Admin View for Product'''
     inlines = [
@@ -37,6 +38,7 @@ class ProductAdmin(admin.ModelAdmin):
         ]
     list_display = ('product_name', 'price', 'stock', 'category', 'modifield_date', 'is_available')
     prepopulated_fields = {'slug': ('product_name',)}
+    
     # list_filter = ('',)
     # raw_id_fields = ('',)
     # readonly_fields = ('',)

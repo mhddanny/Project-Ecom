@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+
+    {% include 'includes/alerts.html' %}
+    <div class="container">
+        <div class="row">
+            {% include 'accounts/dashboard_slide.html' %}
+            <main class="col-md-9">
+                <article class="card">
+                <header class="card-header">
+                    <strong class="d-inline-block mr-3">My Wislist:</strong>
+                    <span>{{user.full_name}}</span>
+                </header>
+                <div class="card-body">
+                    <div class="row"> 
+                        <div class="col-md-12">
+                            {% if wishlist %}
+                                {% for product in wishlist %}   
+                                    <div class="card mb-3" style="max-width: 540px;">
+                                        <div class="row g-0">
+                                        <div class="col-md-4">
+                                            <img src="{{product.images.url}}" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                            <h5 class="card-title">{{product.product_name}}</h5>
+                                            <p class="card-text">{{product.description}}</p>
+                                            <p class="card-text"><small class="text-body-secondary">Rp. {{product.price}}</small></p>
+                                            <a type="button" class="btn btn-sm btn-primary" href="{% url 'user_wislist' product.id %}">Remove</a>
+                                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="card-text">No Products have you been added to your wishlist yet</p>
+                            {% endif %}
+
+                        </div>
+                    </div> <!-- row.// -->
+                </div> <!-- card-body .// -->
+                
+            </article> <!-- order-group.// --> 
+            </main>
+        </div> <!-- row.// -->
+    </div>
+        
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+     
+    
+{% endblock content %}

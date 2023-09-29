@@ -1,6 +1,7 @@
 from django.db import models
 from category.models import Category
 from accounts.models import Account
+from django.conf import settings
 from django.urls import reverse
 from django.db.models import Avg, Count
 from ckeditor.fields import RichTextField
@@ -18,6 +19,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     modifield_date = models.DateTimeField(auto_now=True)
+    users_wislist = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="user_wislish", blank=True)
 
     def get_url(self):
         return reverse('product_detail', args=[self.category.slug, self.slug])

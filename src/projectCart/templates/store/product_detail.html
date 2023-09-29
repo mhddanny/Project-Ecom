@@ -4,6 +4,7 @@
 {% block content %}
 
 <section class="section-content padding-y bg">
+    {% include 'includes/alerts.html' %}
     <div class="container">
     
     <!-- ============================ COMPONENT 1 ================================= -->
@@ -77,6 +78,10 @@
                         </div>     -->
                         <!--  row.// -->
                         <div class="text-center py-3">
+                            <a href="{% url 'user_wislist' single_product.id %}" class="btn  btn-outline-danger" value="add_button" value="{{single_product.id}}"> 
+                                <span class="text">Add to</span> 
+                                <i class="fas fa-heart"></i>  
+                            </a>
                             {% if single_product.stock <= 0 %}
                                 <h6 class="text-danger"> Out Of Stock </h6>
                             {% else %}

@@ -9,6 +9,13 @@
             active 
             {% endif %}" href="{% url 'my_orders' %}"> My Order 
         </a>
+
+        <!-- WISLIST -->
+        <a class="list-group-item {% if '/my_wishlists/' in request.path %}
+            active
+            {% endif %}" href="{% url 'my_wishlists' %}"> My Wish list 
+        </a>
+
         <a class="list-group-item {% if '/edit_profile/' in request.path %}
             active
             {% endif %}" href="{% url 'edit_profile' %}"> Edit Prodile

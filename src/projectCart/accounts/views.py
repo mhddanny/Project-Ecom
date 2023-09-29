@@ -1,6 +1,6 @@
 from django.contrib import messages,auth
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from . forms import RegisterForm, UserForm, UserProfileForm
 from . models import Account, UserProfile
 from carts.models import Cart, CartItem
@@ -8,6 +8,7 @@ from carts.views import _cart_id
 from django.contrib.auth.decorators import login_required
 
 from orders.models import Order, OrderProduct
+from store.models import Product
 
 #vertification account
 from django.contrib.sites.shortcuts import get_current_site
@@ -299,3 +300,24 @@ def order_detail(request, order_id):
     }
 
     return render(request, 'accounts/order_detail.html', context)
+
+#user_wislist
+@login_required
+def add_to_wislist(request, id):
+    product = get_object_or_404(Product, id=id )
+    if product.users_wislist.filter(id=request.user.id).exists():
+        product.users_wislist.remove(request.user)
+        messages.success(request, 'Remove ' + product.product_name + 'to your wishlist')
+    else:
+        product.users_wislist.add(request.user)
+        messages.success(request, product.product_name + 'Has been removed from your wishlist')
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+@login_required(login_url='login')
+def my_wishlists(request):
+    product = Product.objects.filter(users_wislist=request.user)
+    
+    context = {
+        "wishlist": product
+    }
+    return render(request, 'accounts/my_wishlist.html', context)
