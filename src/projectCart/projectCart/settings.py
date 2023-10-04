@@ -36,6 +36,10 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    # 'channels',
+    'chat',
+    'daphne',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,6 +96,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'projectCart.wsgi.application'
+#Dephne / Chat
+ASGI_APPLICATION = "projectCart.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 AUTH_USER_MODEL = 'accounts.Account'
 
