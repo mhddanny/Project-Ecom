@@ -10,6 +10,8 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('testchat/', views.chat_bubble , name='testchat'),
+
     path('store/', include('store.urls')),
     path('cart/', include('carts.urls')),
     path('accounts/', include('accounts.urls')),

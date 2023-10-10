@@ -13,6 +13,9 @@ class Message(models.Model):
 
     def __str__(self):
         return f'{self.sent_by}'
+
+    def last_10_messages():
+        return Message.objects.order_by('-created_at').all()[:10]
     
 class Room(models.Model):
     WAITING = 'waiting'

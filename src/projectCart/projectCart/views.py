@@ -19,3 +19,8 @@ def home (request):
         'new_product': new_product 
         }
     return render(request, 'home.html', context)
+
+
+def chat_bubble(request):
+    context = {}
+    return render(request, 'chat/chat_bubble.html', context)

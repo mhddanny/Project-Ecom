@@ -98,9 +98,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'projectCart.wsgi.application'
 #Dephne / Chat
 ASGI_APPLICATION = "projectCart.asgi.application"
+
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
 
