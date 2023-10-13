@@ -12,7 +12,7 @@ class Message(models.Model):
         ordering = ('created_at',)
 
     def __str__(self):
-        return f'{self.sent_by}'
+        return f'{self.created_by.username}' '-' f'{self.sent_by}'
 
     def last_10_messages():
         return Message.objects.order_by('-created_at').all()[:10]
@@ -40,4 +40,4 @@ class Room(models.Model):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return f'{self.client}' - '{self.uuid}'
+        return f'{self.client}' '-' f'{self.uuid}'

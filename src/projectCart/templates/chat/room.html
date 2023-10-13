@@ -105,11 +105,15 @@
             </div>
             <div class="message-input">
                 <div class="wrap">
-                <input id="chat-message-input" type="text" placeholder="Write your message..." />
-                <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-                <button id="chat-message-submit" class="submit">
-                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                </button>
+                    <div class="mb-3">
+                        <input id="chat-message-input" type="text" placeholder="Write your message..." />
+                    </div>
+                    <div class="mb-3">
+                        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                        <button id="chat-message-submit" class="submit">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -161,7 +165,7 @@
         };
         document.querySelector('#chat-message-input').focus();
         document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.key === 13 ) {  // enter, return
+            if (e.key === 'Enter' ) {  // enter, return
                 document.querySelector('#chat-message-submit').click();
             }
         };

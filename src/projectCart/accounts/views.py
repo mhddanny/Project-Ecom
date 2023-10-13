@@ -321,3 +321,5 @@ def my_wishlists(request):
         "wishlist": product
     }
     return render(request, 'accounts/my_wishlist.html', context)
+
+    

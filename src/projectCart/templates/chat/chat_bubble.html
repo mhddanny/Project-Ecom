@@ -1,160 +1,68 @@
 {% load static %}
-<html>
-<head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% csrf_token %}
+<style>
+    .hidden {display:none;}
+</style>
 
-</head>
-<body>
-        <!-- <h3 class=" text-center">Messaging</h3> -->
-        <div class="messaging">
-            <div class="inbox_msg">
-                <div class="inbox_people">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                    <h4>Recent</h4>
-                    </div>
-                    <div class="srch_bar">
-                    <div class="stylish-input-group">
-                        <input type="text" class="search-bar"  placeholder="Search" >
-                        <span class="input-group-addon">
-                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                        </span> </div>
-                    </div>
-                </div>
-                <div class="inbox_chat">
-                    <div class="chat_list active_chat">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="chat_ib">
-                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                        <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="chat_list">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="chat_ib">
-                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                        <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="chat_list">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="chat_ib">
-                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                        <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="chat_list">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="chat_ib">
-                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                        <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="chat_list">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="chat_ib">
-                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                        <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="chat_list">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="chat_ib">
-                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                        <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="chat_list">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="chat_ib">
-                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                        <p>Test, which is a new approach to have all solutions 
-                            astrology under one roof.</p>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div class="mesgs">
-                <div class="msg_history">
-                    <div class="incoming_msg">
-                    <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                    <div class="received_msg">
-                        <div class="received_withd_msg">
-                        <p>Test which is a new approach to have all
-                            solutions</p>
-                        <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                    </div>
-                    </div>
-                    <div class="outgoing_msg">
-                    <div class="sent_msg">
-                        <p>Test which is a new approach to have all
-                        solutions</p>
-                        <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-                    </div>
-                    <div class="incoming_msg">
-                    <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                    <div class="received_msg">
-                        <div class="received_withd_msg">
-                        <p>Test, which is a new approach to have</p>
-                        <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-                    </div>
-                    </div>
-                    <div class="outgoing_msg">
-                    <div class="sent_msg">
-                        <p>Apollo University, Delhi, India Test</p>
-                        <span class="time_date"> 11:01 AM    |    Today</span> </div>
-                    </div>
-                    <div class="incoming_msg">
-                    <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                    <div class="received_msg">
-                        <div class="received_withd_msg">
-                        <p>We work directly with our designers and suppliers,
-                            and sell direct to you, which means quality, exclusive
-                            products, at a price anyone can afford.</p>
-                        <span class="time_date"> 11:01 AM    |    Today</span></div>
-                    </div>
-                    </div>
-                </div>
-                <div class="type_msg">
-                    <div class="input_msg_write">
-                    <input type="text" class="write_msg" placeholder="Type a message" />
-                    <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                    </div>
-                </div>
-                </div>
-            </div>
-            
-            
-            <!-- <p class="text-center top_spac"> Design by <a target="_blank" href="https://www.linkedin.com/in/sunil-rajput-nattho-singh/">Sunil Rajput</a></p> -->
-            
-        </div>
-   
-        
-</body>
+<input type="checkbox" id="check">
+
+<label class="chat-btn" for="check"> 
+    <i class="fa fa-commenting-o comment"></i> 
+    <i class="fa fa-close close"></i> 
+</label> 
+<div class="wrapper"> 
+
+    <div class="header"> 
+        <h6>Let's Chat - Online</h6> 
+    </div> 
+    <div id="chat_welcome" class="hidden">
+        <div class="text-center p-2"> 
+            <span>Please fill out the form to start chat!</span> 
+        </div> 
+        <div class="chat-form"> 
+            <input id="chat_name" type="text" name="name" class="form-control" placeholder="Name"> 
+            <button id="chat_join" class="btn btn-sm btn-success btn-block mb-3">Join chat</button> 
+        </div> 
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div id="chat_room" class="hidden">  
+            <div class="chat-form">
+                <div id="chat_log" class="overflow-auto" style="height: 350px; width: 320px;">
+                    <p>Welcome</p>
     
-</html>
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                            alt="avatar 1" style="width: 45px; height: 100%;">
+                        <div>
+                            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #ffffff;">Okay</p>
+                            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #ffffff;">We will go on
+                                Sunday?</p>
+                            <p class="small ms-3 mb-3 rounded-3 text-muted">00:07</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                        <div>
+                            <p class="small p-2 me-3 mb-1 text-white rounded-3" style="background-color: #349afa;">That's awesome!</p>
+                            <p class="small p-2 me-3 mb-1 text-white rounded-3" style="background-color: #349afa;">I will meet you Sandon Square
+                                sharp at
+                                10 AM</p>
+                            <p class="small p-2 me-3 mb-1 text-white rounded-3" style="background-color: #349afa;">Is that okay?</p>
+                            <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:09</p>
+                        </div>
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                            alt="avatar 1" style="width: 45px; height: 100%;">
+                    </div>
+    
+                    
+                </div>
+        
+                <input id="chat_message_input" type="text" name="body" class="form-control" placeholder="messages"> 
+                <button id="chat_message_submit" class="btn btn-sm btn-success btn-block mb-3" type="submit"><i class="fas fa-paper-plane"></i> send</button> 
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src="{% static 'js/chat/bubble.js' %}"></script>

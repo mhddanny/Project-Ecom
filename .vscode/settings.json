@@ -7,7 +7,7 @@
             "driver": "PostgreSQL",
             "name": "arrasyiiid",
             "database": "projectCart",
-            "username": "danny95"
+            "username": "postgres"
         }
     ]
 }
