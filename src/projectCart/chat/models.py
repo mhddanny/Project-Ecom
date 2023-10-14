@@ -12,7 +12,7 @@ class Message(models.Model):
         ordering = ('created_at',)
 
     def __str__(self):
-        return f'{self.created_by.username}' '-' f'{self.sent_by}'
+        return self.send_by
 
     def last_10_messages():
         return Message.objects.order_by('-created_at').all()[:10]

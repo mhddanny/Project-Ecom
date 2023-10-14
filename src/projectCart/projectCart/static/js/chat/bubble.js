@@ -1,4 +1,6 @@
-// Variable
+/**
+ * Element
+ */
 let chatName = ''
 let chatSocket = null
 let chatWindowUrl = window.location.href
@@ -15,7 +17,14 @@ const chatNameElement = document.querySelector('#chat_name');
 const chatInputElement = document.querySelector('#chat_message_input');
 const chatSubmitElement = document.querySelector('#chat_message_submit');
 
-// Function
+/**
+ * Function
+ *  */ 
+
+function scrollToBottom() {
+    chatLogElement.scrollTop = chatLogElement.scrollHeight
+}
+
 function getCookie(name) {
     var cookieValue = null
 
@@ -56,7 +65,7 @@ function onChatMessage(data) {
             chatLogElement.innerHTML += `
                 <div class="d-flex flex-row justify-content-start mb-4">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                        alt="avatar 1" style="width: 45px; height: 100%;">
+                        alt="avatar 1" style="width: 45px; height: 100%;" class="mr-2">
                     <div>
                         <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #ffffff;">${data.message}</p>
                         <p class="small ms-3 mb-3 rounded-3 text-muted">${data.created_at} ago</p>
@@ -72,12 +81,13 @@ function onChatMessage(data) {
                         <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">${data.created_at} ago</p>
                     </div>
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                        alt="avatar 1" style="width: 45px; height: 100%;">
+                        alt="avatar 1" style="width: 45px; height: 100%;" class="ml-2"">
                 </div>
             `
         
         }
     }
+    scrollToBottom()
 }
 
 async function joinChatRomm(){
@@ -115,6 +125,7 @@ async function joinChatRomm(){
 
     chatSocket.onopen = function(e) {
         console.log('onopen - chat socket was opened')
+        scrollToBottom()
     }
 
     chatSocket.onclose = function(e) {
@@ -142,8 +153,15 @@ chatJoinElement.onclick = function(e) {
 }
 
 chatInputElement.focus()
+chatInputElement.onkeyup = function(e) {
+    if (e.key === 'Enter' ) {
+        sendMessage()
+    }
+}
+
 chatSubmitElement.onclick = function(e) {
     // e.preventDefault()
     
     sendMessage()
 }
+

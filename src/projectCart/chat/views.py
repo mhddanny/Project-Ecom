@@ -38,14 +38,28 @@ def create_room(request, uuid):
 
     return JsonResponse({'message': 'room created'})
 
-# @login_required
-# def chatAdmin(request):
-#     rooms = Room.objects.all()
-#     users = Account.object.filter(is_staff=True)
+@login_required
+def chatAdmin(request):
+    rooms = Room.objects.all()
+    users = Account.object.filter(is_staff=True)
 
-#     context = {
-#         'rooms': rooms,
-#         'users': users
-#     }
+    context = {
+        'rooms': rooms,
+        'users': users
+    }
 
-#     return render(request, 'chat/chat-admin.html', context)
+    return render(request, 'chat/admin/chat_admin.html', context)
+
+@login_required
+def chatAdminRoom(request, uuid):
+    room = Room.objects.get(uuid=uuid)
+
+    if room.status == Room.WAITING:
+        room.status = Room.ACTIVE
+        room.agent = request.user
+        room.save()
+
+    context = {
+        'room': room
+    }
+    return render(request, 'chat/admin/admin_chat_room.html', context)

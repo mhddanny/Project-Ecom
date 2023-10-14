@@ -6,7 +6,7 @@
 
 <input type="checkbox" id="check">
 
-<label class="chat-btn" for="check"> 
+<label class="chat-btn" for="check" id=""> 
     <i class="fa fa-commenting-o comment"></i> 
     <i class="fa fa-close close"></i> 
 </label> 
@@ -17,7 +17,7 @@
     </div> 
     <div id="chat_welcome" class="hidden">
         <div class="text-center p-2"> 
-            <span>Please fill out the form to start chat!</span> 
+            <span>Please fill out the name to start chat!</span> 
         </div> 
         <div class="chat-form"> 
             <input id="chat_name" type="text" name="name" class="form-control" placeholder="Name"> 
@@ -30,9 +30,9 @@
                 <div id="chat_log" class="overflow-auto" style="height: 350px; width: 320px;">
                     <p>Welcome</p>
     
-                    <div class="d-flex flex-row justify-content-start mb-4">
+                    <!-- <div class="d-flex flex-row justify-content-start mb-4">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                            alt="avatar 1" style="width: 45px; height: 100%;">
+                            alt="avatar 1" style="width: 45px; height: 100%;" class="mr-2">
                         <div>
                             <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #ffffff;">Okay</p>
                             <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #ffffff;">We will go on
@@ -51,8 +51,8 @@
                             <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">00:09</p>
                         </div>
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                            alt="avatar 1" style="width: 45px; height: 100%;">
-                    </div>
+                            alt="avatar 1" style="width: 45px; height: 100%;" class="ml-2">
+                    </div> -->
     
                     
                 </div>
@@ -65,4 +65,6 @@
     </div>
 
 </div>
+{% block script %}
 <script src="{% static 'js/chat/bubble.js' %}"></script>
+{% endblock script %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Ar-Rasyiid | Chat
+{% endblock title %}
+{% block content %}
+<section class="section-conten padding-y bg">
+
+    {% include 'includes/alerts.html' %}
+    <div class="container">
+        <div class="row">
+            {% include 'accounts/dashboard_slide.html' %}
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <strong class="d-inline-block mr-3">Chat Room</strong>
+                        <span>{{user.full_name}}</span>
+                    </header>
+                    <div class="card-body">
+                        <div class="row"> 
+                            {% for room in rooms %}
+                            <div class="col-md-3">
+                                <figcaption class="info-wrap">
+                                    <div class="card {% if room.status == 'waiting' %} bg-success text-white {% elif room.status == 'active' %} bg-warning text-dark {% else %} text-dark bg-light {% endif %} mb-3" style="opacity: .7;" >
+                                        <div class="card-body">
+                                            <h3 class="card-title">Chat</h3>
+                                            <p>
+                                                <b class="mb-1">ID : {{room.uuid}}</b><br>
+                                                <b class="mb-1">Name : {{room.client}}</b><br>
+                                                <b class="mb-1">Status : {{room.get_status_display}}</b><br>
+                                                <b class="mb-1">Agen : {% firstof room.agen.name 'Not yet...'%}</b>
+                                            </p>
+                                            <a href="{% url 'chat:chat-admin-room' room.uuid %}" class="btn btn-sm btn-block btn-primary">Join</a>
+                                        </div>
+                                    </div>
+                                </figcaption>
+                            </div>
+                            {% endfor %}
+                        </div> <!-- row.// -->
+                    </div> <!-- card-body .// -->
+                    
+                </article> <!-- order-group.// --> 
+            </main>
+
+        </div> <!-- row.// -->
+    </div>
+        
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+{% endblock content %}

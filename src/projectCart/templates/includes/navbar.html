@@ -19,10 +19,10 @@
                 <li><a href="mailto:md.danny95@gmail.com" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
                 <li><a href="tel:+6281211143508" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
                 
-                <!-- {% if request.user.is_authenticated %}
-                    <li><a href="" class="nav-link"> <i class="fa fa-comment"></i> Chat Admin</a></li>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'chat:chat-admin' %}" class="nav-link"> <i class="fa fa-comment"></i> Chat Admin</a></li>
 
-                {% endif %} -->
+                {% endif %}
             </ul> <!-- list-inline //  -->
           </div> <!-- navbar-collapse .// -->
         </div> <!-- container //  -->    
