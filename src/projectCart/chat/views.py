@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse 
 from django.utils.safestring import mark_safe
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 
 from accounts.models import Account
@@ -63,3 +64,15 @@ def chatAdminRoom(request, uuid):
         'room': room
     }
     return render(request, 'chat/admin/admin_chat_room.html', context)
+
+@login_required
+def deleteAdminRoom(request, uuid):
+    if request.user.has_perm('room.delete_room'):
+        room = Room.objects.get(uuid=uuid)
+        room.delete()
+
+        messages.success(request, 'You have delete room succesfully')
+        return redirect('/chat-admin/')
+    else:
+        messages.error(request, 'You don\t have access to delete room!')
+        return redirect('/chat-admin/')

@@ -23,7 +23,7 @@
                                 <b>Started: </b>{{room.created_at|timesince}} ago<br>
                                 <b>Status: </b>{{room.get_status_display}}<br>
                                 <b>Page: </b>{{room.url}}<br>
-                                <b>Agen: </b>{% firstof room.crated_by 'None yet...' %}
+                                <b>Agen: </b>{% firstof room.agent.username 'None yet...' %}
                             </div>
                         </div> <!-- row.// -->
                     </div> <!-- card-body .// -->

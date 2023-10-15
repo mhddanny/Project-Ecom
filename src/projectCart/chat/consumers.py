@@ -99,6 +99,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_{self.room_name}"
+        self.user = self.scope['user']
+
 
         # Join room group
         await self.get_room()
@@ -108,6 +110,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         # Leave room group
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+
+        if not self.user.is_staff:
+            await self.set_room_closed()
 
     # Receive message from WebSocket
     async def receive(self, text_data):
@@ -153,6 +158,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def get_room(self):
         self.room = Room.objects.get(uuid=self.room_name)
 
+    @sync_to_async
+    def set_room_closed(self):
+        self.room = Room.objects.get(uuid=self.room_name)
+        self.room.status = Room.CLOSED
+        self.room.save()
 
     @sync_to_async
     def create_message(self, send_by, message, agent):

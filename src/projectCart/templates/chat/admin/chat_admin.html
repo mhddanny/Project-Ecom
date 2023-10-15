@@ -11,6 +11,24 @@
         <div class="row">
             {% include 'accounts/dashboard_slide.html' %}
             <main class="col-md-9">
+                <article class="card mb-3">
+                    <header class="card-header">
+                        <strong class="d-inline-block mr-3">Chat Admin</strong>
+                        
+                    </header>
+                    <div class="card-body">
+                        <div class="row"> 
+                            {% if perms.user.add_user %}
+                                <div class="col-md-12">
+                                    <h5 mb-4 text-lg>User</h5>
+                                    <a class="btn btn-primary rounded-xl" href="#" role="button">Add user</a>
+                                </div>
+                            {% endif %}
+                        </div> <!-- row.// -->
+                    </div> <!-- card-body .// -->
+                    
+                </article> <!-- order-group.// --> 
+                
                 <article class="card">
                     <header class="card-header">
                         <strong class="d-inline-block mr-3">Chat Room</strong>
@@ -28,9 +46,10 @@
                                                 <b class="mb-1">ID : {{room.uuid}}</b><br>
                                                 <b class="mb-1">Name : {{room.client}}</b><br>
                                                 <b class="mb-1">Status : {{room.get_status_display}}</b><br>
-                                                <b class="mb-1">Agen : {% firstof room.agen.name 'Not yet...'%}</b>
+                                                <b class="mb-1">Agen : {% firstof room.agent.full_name 'Not yet...'%}</b>
                                             </p>
-                                            <a href="{% url 'chat:chat-admin-room' room.uuid %}" class="btn btn-sm btn-block btn-primary">Join</a>
+                                            <a href="{% url 'chat:chat-admin-room' room.uuid %}" class=" btn btn-sm btn-block btn-primary">Join</a>
+                                            <a href="{% url 'chat:delete-admin-room' room.uuid %}" class=" btn btn-sm btn-block btn-danger">delete</a>
                                         </div>
                                     </div>
                                 </figcaption>
@@ -39,7 +58,8 @@
                         </div> <!-- row.// -->
                     </div> <!-- card-body .// -->
                     
-                </article> <!-- order-group.// --> 
+                </article> 
+
             </main>
 
         </div> <!-- row.// -->

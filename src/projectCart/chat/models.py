@@ -20,12 +20,12 @@ class Message(models.Model):
 class Room(models.Model):
     WAITING = 'waiting'
     ACTIVE = 'active'
-    CLOSE = 'close'
+    CLOSED = 'closed'
 
     CHOICES_STATUS = {
         (WAITING, 'Waiting'),
         (ACTIVE, 'Active'),
-        (CLOSE, 'Close'),
+        (CLOSED, 'Closed'),
     }
 
     uuid = models.CharField(max_length=255)
