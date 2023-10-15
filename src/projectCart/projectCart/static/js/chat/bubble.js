@@ -61,6 +61,12 @@ function onChatMessage(data) {
     console.log('onChatMessage', data)
 
     if (data.type == 'chat_message') {
+        let tmpInfo = document.querySelector('.tmp-info')
+
+        if(tmpInfo){
+            tmpInfo.remove()
+        }
+
         if (data.agent) {
             chatLogElement.innerHTML += `
                 <div class="d-flex flex-row justify-content-start mb-4">
@@ -83,10 +89,32 @@ function onChatMessage(data) {
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
                         alt="avatar 1" style="width: 45px; height: 100%;" class="ml-2"">
                 </div>
-            `
-        
+            ` 
+        }
+    } else if(data.type == 'users_update'){
+        chatLogElement.innerHTML += '<p class="small text-center "> The admin/agent has joined the chat! </p>'
+    } else if(data.type == 'writing_active') {
+        if (data.agent) {
+            let tmpInfo = document.querySelector('.tmp-info')
+
+            if(tmpInfo){
+                tmpInfo.remove()
+            }
+
+            chatLogElement.innerHTML += `
+                    <div class="tmp-info">
+                        <div class="d-flex flex-row justify-content-start mb-4">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                alt="avatar 1" style="width: 45px; height: 100%;" class="mr-2">
+                            <div>
+                                <p class="small p-3 me-3 rounded-3 text-muted">The agent/admin is typing...</p>
+                            </div>
+                        </div>
+                    </div>
+                `
         }
     }
+
     scrollToBottom()
 }
 
@@ -152,7 +180,6 @@ chatJoinElement.onclick = function(e) {
 
 }
 
-chatInputElement.focus()
 chatInputElement.onkeyup = function(e) {
     if (e.key === 'Enter' ) {
         sendMessage()
@@ -165,3 +192,10 @@ chatSubmitElement.onclick = function(e) {
     sendMessage()
 }
 
+chatInputElement,onfocus = function (e) {
+    chatSocket.send(JSON.stringify({
+        'type': 'update',
+        'message': 'writing_active',
+        'name': chatName
+        }))
+}

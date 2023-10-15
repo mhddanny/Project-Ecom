@@ -3,10 +3,10 @@ from channels.generic.websocket import  AsyncWebsocketConsumer, WebsocketConsume
 from django.contrib.auth import get_user_model
 from django.utils.timesince import timesince
 
-from .chatextras import initials
 
 from accounts.models import Account
 from .models import Room, Message
+from .chatextras import initials
 
 import json
 # Account = get_user_model()
@@ -101,11 +101,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_group_name = f"chat_{self.room_name}"
         self.user = self.scope['user']
 
-
         # Join room group
         await self.get_room()
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
+
+        #inform user
+        if self.user.is_staff:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'users_update'
+                }
+            )
+
 
     async def disconnect(self, close_code):
         # Leave room group
@@ -126,8 +135,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         if type == 'message':
             new_message = await self.create_message(name, message, agent)
-
-            
+       
             # Send message to room group
             await self.channel_layer.group_send(
                 self.room_group_name, {
@@ -139,7 +147,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'created_at': timesince(new_message.created_at),
                 }
             )
-
+        elif type == 'update':
+            print("is updated")
+            #send update to the room
+            await self.channel_layer.group_send(
+                self.room_group_name, {
+                    'type': 'writing_active',
+                    'message': message,
+                    'name': name,
+                    'agent': agent,
+                    'initials': initials(name),
+                }
+            )
 
     # Receive message from room group
     async def chat_message(self, event):
@@ -153,6 +172,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'created_at': event['created_at'],
             })
         )
+
+    async def writing_active(self, event):
+        #send writing is active to room
+        await self.send(text_data=json.dumps({
+            'type': event['type'],
+            'message': event['message'],
+            'name': event['name'],
+            'agent': event['agent'],
+            'initials': event['initials'],
+        }))
+
+    async def users_update(self, event):
+        #sent information to the web socker (front end)
+        await self.send(text_data=json.dumps({
+            'type': 'users_update'
+        }))
 
     @sync_to_async
     def get_room(self):
