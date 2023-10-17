@@ -14,27 +14,27 @@ locale-gen en_GB.UTF-8
 # Install Python, SQLite and pip
 echo "Installing dependencies..."
 apt-get update
-apt-get install -y python3-dev python3-venv sqlite python-pip supervisor nginx git
+apt-get install -y python3-dev python3-venv python-pip supervisor postgresql postgresql-contrib nginx git
 
 mkdir -p $PROJECT_BASE_PATH
-git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/projectCart
+git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/Project-Ecom
 
 mkdir -p $VIRTUALENV_BASE_PATH
-python3 -m venv $VIRTUALENV_BASE_PATH/projectCart
+python3 -m venv $VIRTUALENV_BASE_PATH/Project-Ecom
 
-$VIRTUALENV_BASE_PATH/projectCart/bin/pip install -r $PROJECT_BASE_PATH/projectCart/requirements2.txt
+$VIRTUALENV_BASE_PATH/projectCart/bin/pip install -r $PROJECT_BASE_PATH/Project-Ecom/requirements2.txt
 
 # Run migrations
-cd $PROJECT_BASE_PATH/projectCart/src
+cd $PROJECT_BASE_PATH/Project-Ecom/src
 
 # Setup Supervisor to run our uwsgi process.
-cp $PROJECT_BASE_PATH/projectCart/deploy/supervisor_projectCart.conf /etc/supervisor/conf.d/projectCart.conf
+cp $PROJECT_BASE_PATH/Project-Ecom/deploy/supervisor_projectCart.conf /etc/supervisor/conf.d/projectCart.conf
 supervisorctl reread
 supervisorctl update
-supervisorctl restart projectCart
+supervisorctl restart Project-Ecom
 
 # Setup nginx to make our application accessible.
-cp $PROJECT_BASE_PATH/projectCart/deploy/nginx_projectCart.conf /etc/nginx/sites-available/projectCart.conf
+cp $PROJECT_BASE_PATH/Project-Ecom/deploy/nginx_projectCart.conf /etc/nginx/sites-available/projectCart.conf
 rm /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/projectCart.conf /etc/nginx/sites-enabled/projectCart.conf
 systemctl restart nginx.service
