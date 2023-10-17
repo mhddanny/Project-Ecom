@@ -22,7 +22,7 @@ git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/projectCart
 mkdir -p $VIRTUALENV_BASE_PATH
 python3 -m venv $VIRTUALENV_BASE_PATH/projectCart
 
-$VIRTUALENV_BASE_PATH/projectCart/bin/pip install -r $PROJECT_BASE_PATH/projectCart/requirements.txt
+$VIRTUALENV_BASE_PATH/projectCart/bin/pip install -r $PROJECT_BASE_PATH/projectCart/requirements2.txt
 
 # Run migrations
 cd $PROJECT_BASE_PATH/projectCart/src
