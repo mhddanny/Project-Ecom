@@ -22,7 +22,7 @@ git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/Project-Ecom
 mkdir -p $VIRTUALENV_BASE_PATH
 python3 -m venv $VIRTUALENV_BASE_PATH/Project-Ecom
 
-$VIRTUALENV_BASE_PATH/projectCart/bin/pip install -r $PROJECT_BASE_PATH/Project-Ecom/requirements.txt
+$VIRTUALENV_BASE_PATH/Project-Ecom/bin/pip install -r $PROJECT_BASE_PATH/Project-Ecom/requirements.txt
 
 # Run migrations
 cd $PROJECT_BASE_PATH/Project-Ecom/src
