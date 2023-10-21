@@ -1,3 +1,5 @@
+.hidden {display:none;}
+
 body {
   display: flex;
   align-items: center;

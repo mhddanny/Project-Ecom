@@ -20,12 +20,13 @@
             active
             {% endif %}" href="{% url 'edit_profile' %}"> Edit Prodile
         </a>
+
         <!-- room Chat -->
         <a class="list-group-item {% if '/chat-admin/' in request.path %}
             active
             {% endif %}" href="{% url 'chat:chat-admin' %}">Chat Room
         </a>
-        
+
         <a class="list-group-item {% if '/change_password/' in request.path %}
             active
             {% endif %}" href="{% url 'change_password' %}">Change Password 

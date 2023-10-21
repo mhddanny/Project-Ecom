@@ -11,6 +11,7 @@ const chatWelcomeElement = document.getElementById("chat_welcome");
 const chatRoomElement = document.getElementById("chat_room");
 
 const chatCheckElement = document.querySelector('#check');
+const chatClosekElement = document.querySelector('#close');
 const chatJoinElement = document.querySelector('#chat_join');
 const chatLogElement = document.querySelector('#chat_log');
 const chatNameElement = document.querySelector('#chat_name');
