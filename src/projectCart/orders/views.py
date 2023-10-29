@@ -1,14 +1,24 @@
-from django.shortcuts import render, redirect
+from carts.models import Cart, CartItem
+from django.core.mail import EmailMessage
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
+from django.template.loader import render_to_string
+from django.shortcuts import render, redirect
+from store.models import Product
 
 from . forms import OrderForm
-from carts.models import Cart, CartItem
 from . models import Order, OrderProduct, Payment 
-from  store.models import Product
+
 import datetime
 import json
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
+import uuid
+import midtransclient
+
+snap = midtransclient.Snap(
+    is_production=False,
+    server_key=settings.MIDTRANS['SERVER_KEY']
+    client_key=settings.MIDTRANS['CLIENT_KEY'],
+)
 
 def payments(request):
     body = json.loads(request.body)
