@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+import uuid
+
 # Create your models here.
 
 class MyAccountManager(BaseUserManager):
@@ -82,3 +85,63 @@ class UserProfile(models.Model):
 
     def full_address(self):
         return f'{self.address_line_1} {self.address_line_2}' 
+
+class Province(models.Model):
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class City(models.Model):
+    KABUPATEN = 'Kabupaten'
+    KOTA = 'Kota'
+
+    CHOICES_TYPE = {
+        (KABUPATEN, 'Kabupaten'),
+        (KOTA, 'Kota'),
+    }
+
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    area = models.CharField(max_length=10, choices=CHOICES_TYPE, default=KOTA)
+    post_code = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class District(models.Model):
+    province = models.ForeignKey(Province, max_length=10, on_delete=models.CASCADE)
+    city = models.ForeignKey(City,max_length=10, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class Address(models.Model):
+    """
+        Address
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(Account, verbose_name="User", on_delete=models.CASCADE)
+    name = models.CharField(verbose_name="Full Name", max_length=150)
+    phone = models.CharField(verbose_name="Phone", max_length=50)
+    address_line_1 = models.CharField(verbose_name="Address Line 1", max_length=150)
+    address_line_2 = models.CharField(verbose_name="Address Line 2", max_length=150)
+    district = models.ForeignKey(District, verbose_name="District", on_delete=models.CASCADE, blank=True)
+    delivery_intructions = models.CharField(verbose_name="Delivery Intructions", max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    default = models.BooleanField(verbose_name="Default", default=False)
+    
+    class Meta:
+        verbose_name = "Address"
+        verbose_name_plural = "Address"
+
+    def __str__(self):
+        return self.name

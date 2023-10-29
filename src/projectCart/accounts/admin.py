@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from . models import Account, UserProfile
+from . models import Account, UserProfile, Province, City, District, Address
 from django.utils.html import format_html
 
 class AccountAdmin(UserAdmin):
@@ -22,3 +22,11 @@ class UserProfilerAdmin(admin.ModelAdmin):
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(UserProfile,UserProfilerAdmin)
+
+class ProvicesAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Province)
+admin.site.register(City)
+admin.site.register(District)
+admin.site.register(Address)

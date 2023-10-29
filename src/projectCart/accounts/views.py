@@ -1,14 +1,17 @@
 from django.contrib import messages,auth
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from . forms import RegisterForm, UserForm, UserProfileForm
-from . models import Account, UserProfile
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.urls import reverse
+from . forms import RegisterForm, UserForm, UserProfileForm, UserAddressForm
+from . models import Account, UserProfile, Address, Province, City, District
 from carts.models import Cart, CartItem
 from carts.views import _cart_id
 from django.contrib.auth.decorators import login_required
 
 from orders.models import Order, OrderProduct
 from store.models import Product
+
+import json
 
 #vertification account
 from django.contrib.sites.shortcuts import get_current_site
@@ -257,6 +260,120 @@ def edit_profile(request):
         'userprofile': userprofile
     }
     return render(request, 'accounts/edit_profile.html', context)
+
+def getCity(request):
+    if request.method == "GET":
+        province_id = request.GET.get('province_id')
+        city_id = list(City.objects.filter(province=province_id).values())
+        data = dict()
+        data = {
+            'data': city_id
+        }
+    # pass
+        return JsonResponse(data)
+    
+
+def getDistrict(request):
+    if request.method == 'GET':
+        city_id = request.GET.get('city_id')
+        district_id = list(District.objects.filter(city=city_id).values())
+        data = dict()
+        data = {
+                'data': district_id
+            }
+        return JsonResponse(data)
+
+@login_required(login_url='login')
+def address(request):
+    address = Address.objects.filter(user=request.user)
+
+    context = {
+        'address': address
+    }
+    return render(request, 'accounts/profile/address.html', context)
+
+@login_required(login_url='login')
+def add_address(request):
+    prov = Province.objects.all()
+    if request.method == "POST":
+        name = request.POST['name']
+        phone = request.POST['phone']
+        address_line_1 = request.POST['address_line_1']
+        address_line_2 = request.POST['address_line_2']
+        district_id = request.POST['district']
+        address_form = UserAddressForm(data=request.POST or None)
+        if address_form.is_valid():
+            address = Address(
+                name=name,
+                phone=phone,
+                address_line_1=address_line_1,
+                address_line_2=address_line_2,
+                district_id=district_id,
+                user_id= request.user.id
+            )
+
+            address.save()
+            messages.success(request, 'Your address has been created')
+            return HttpResponseRedirect(reverse("address"))
+        else:
+            messages.error(request, 'Your address is not Valid')
+
+    else:
+         address_form = UserAddressForm()
+            
+    context = {
+            "prov": prov,
+            "form": address_form
+        }
+    return render(request, 'accounts/profile/add_address.html', context)
+
+@login_required(login_url='login')
+def edit_address(request, id):
+    prov = Province.objects.all()
+    address = Address.objects.get(pk=id, user=request.user)
+    if request.method == "POST":
+        print(request.POST)
+        name = request.POST['name']
+        phone = request.POST['phone']
+        address_line_1 = request.POST['address_line_1']
+        address_line_2 = request.POST['address_line_2']
+        district_id = request.POST['district']
+        address_form = UserAddressForm(data=request.POST or None, instance=address)
+        if address_form.is_valid():
+            address = Address.objects.get(pk=id, user=request.user)
+            address.name=name
+            address.phone=phone
+            address.address_line_1=address_line_1
+            address.address_line_2=address_line_2
+            address.district_id=district_id
+            address.save()
+
+            messages.success(request, 'Your address has been updata')
+            return HttpResponseRedirect(reverse("address"))
+        else:
+            messages.error(request, 'Your address is not Valid')
+
+    else:
+         address_form = UserAddressForm(instance=address, data=request.POST or None)
+            
+    context = {
+            "prov": prov,
+            "form": address_form,
+            "address": address,
+        }
+    return render(request, 'accounts/profile/add_address.html', context)
+
+@login_required(login_url='login')
+def delete_address(request, id):
+    address = Address.objects.filter(pk=id, user=request.user).delete()
+    messages.success(request, 'Your address has been Deleted')
+    return redirect("address")
+
+@login_required(login_url="login")
+def set_default(request, id):
+    Address.objects.filter(user=request.user, default=True).update(default=False)
+    Address.objects.filter(pk=id, user=request.user).update(default=True)
+    return redirect("address")
 
 @login_required(login_url='login')
 def change_password(request):

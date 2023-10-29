@@ -1,5 +1,5 @@
 from django import forms
-from . models import Account, UserProfile
+from . models import Account, UserProfile, Address, Province, City, District
 
 class RegisterForm(forms.ModelForm):
     # first_name = forms.CharField(widget=forms.TextInput(
@@ -77,9 +77,38 @@ class UserProfileForm(forms.ModelForm):
     profile_picture = forms.ImageField(required=False, error_messages={ 'invalid':("Image files only") }, widget=forms.FileInput)
     class Meta:
         model = UserProfile
-        fields = ('address_line_1', 'address_line_2', 'city', 'state', 'country', 'profile_picture', 'postcode')
+        fields = [ 'address_line_1', 'address_line_2', 'city', 'state', 'country', 'profile_picture', 'postcode' ]
     
     def __init__(self, *args, **kwargs):
         super(UserProfileForm,self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+
+class UserAddressForm(forms.ModelForm):
+    # province = forms.ModelChoiceField(queryset=Province.objects.all(), empty_label="--Provice--")
+    # city = forms.ModelChoiceField(queryset=city.objects.all(), empty_label="--Null--")
+    # district = forms.ModelChoiceField(queryset=district.objects.all(), empty_label="--Null--")
+    
+    
+
+    class Meta:
+        model = Address
+        fields = ['name', 'phone', 'address_line_1', 'address_line_2', 'district']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["name"].widget.attrs.update(
+            {"class": "form-control mb-2", "placeholder": "Name",}
+        )
+
+        self.fields["phone"].widget.attrs.update(
+            {"class": "form-control mb-2", "placeholder": "Phone", "text": "number"}
+        )
+
+        self.fields["address_line_1"].widget.attrs.update(
+            {"class": "form-control mb-2", "placeholder": "Address Line 1"}
+        )
+
+        self.fields["address_line_2"].widget.attrs.update(
+            {"class": "form-control mb-2", "placeholder": "Address Line 1"}
+        )

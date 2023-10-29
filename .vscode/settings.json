@@ -5,9 +5,9 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "arrasyiiid",
+            "name": "projectCart",
             "database": "projectCart",
-            "username": "postgres"
+            "username": "postgrest"
         }
     ]
 }

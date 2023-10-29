@@ -21,6 +21,11 @@
             {% endif %}" href="{% url 'edit_profile' %}"> Edit Prodile
         </a>
 
+        <a class="list-group-item {% if '/address/' in request.path %}
+            active
+            {% endif %}" href="{% url 'address' %}"> Address Delivery
+        </a>
+
         <!-- room Chat -->
         <a class="list-group-item {% if '/chat-admin/' in request.path %}
             active
