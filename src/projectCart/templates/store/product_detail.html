@@ -65,7 +65,7 @@
                         <!-- row.// -->
                         
                         <!-- Varian Sizes -->
-                        <!-- <div class="row">
+                        <div class="row">
                             <div class="item-option-select">
                                 <h6>Select Size</h6>
                                 <select name="size" id="" class="form-control" required>
@@ -75,8 +75,9 @@
                                     {% endfor %}
                                 </select> 
                             </div>
-                        </div>     -->
+                        </div>    
                         <!--  row.// -->
+
                         <div class="text-center py-3">
                             <a href="{% url 'user_wislist' single_product.id %}" value="add_button" value="{{single_product.id}}"> 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-suit-heart mr-2" style="color: red;" viewBox="0 0 16 16">
@@ -96,6 +97,7 @@
                                 <a class="btn btn-outline-success" href="http://wa.me/+6281211143508"><i class="fa fa-whatsapp" ></i> Chat</a>
                             {% endif %}
                         </div>
+
                     </article> <!-- product-info-aside .// -->
                 </form>
             </main> <!-- col.// -->

@@ -32,8 +32,7 @@
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label for="">Full Name</label>
-                                            <input class="form-control" type="text" name="name" placeholder="Full Name" value="{{ address.name }}">
-                                           
+                                            <input class="form-control" type="text" name="name" placeholder="Full Name" value="{{ address.name }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Phone</label>

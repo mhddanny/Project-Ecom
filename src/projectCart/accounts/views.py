@@ -331,21 +331,17 @@ def add_address(request):
 def edit_address(request, id):
     prov = Province.objects.all()
     address = Address.objects.get(pk=id, user=request.user)
+    form = UserAddressForm(data=request.POST or None, instance=address)
+
     if request.method == "POST":
-        print(request.POST)
-        name = request.POST['name']
-        phone = request.POST['phone']
-        address_line_1 = request.POST['address_line_1']
-        address_line_2 = request.POST['address_line_2']
-        district_id = request.POST['district']
-        address_form = UserAddressForm(data=request.POST or None, instance=address)
-        if address_form.is_valid():
+        form = UserAddressForm(data=request.POST or None, instance=address)
+        if form.is_valid():
             address = Address.objects.get(pk=id, user=request.user)
-            address.name=name
-            address.phone=phone
-            address.address_line_1=address_line_1
-            address.address_line_2=address_line_2
-            address.district_id=district_id
+            address.name=form.cleaned_data['name']
+            address.phone=form.cleaned_data['phone']
+            address.address_line_1=form.cleaned_data['address_line_1']
+            address.address_line_2=form.cleaned_data['address_line_2']
+            address.district_id=form.cleaned_data['district']
             address.save()
 
             messages.success(request, 'Your address has been updata')
@@ -354,14 +350,14 @@ def edit_address(request, id):
             messages.error(request, 'Your address is not Valid')
 
     else:
-         address_form = UserAddressForm(instance=address, data=request.POST or None)
+         form = UserAddressForm(instance=address, data=request.POST or None)
             
     context = {
             "prov": prov,
-            "form": address_form,
+            "form": form,
             "address": address,
         }
-    return render(request, 'accounts/profile/add_address.html', context)
+    return render(request, 'accounts/profile/edit_address.html', context)
 
 @login_required(login_url='login')
 def delete_address(request, id):

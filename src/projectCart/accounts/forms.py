@@ -98,17 +98,17 @@ class UserAddressForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["name"].widget.attrs.update(
-            {"class": "form-control mb-2", "placeholder": "Name",}
+            {"class": "form-control mb-2", "placeholder": "Name", "required": "True" }
         )
 
         self.fields["phone"].widget.attrs.update(
-            {"class": "form-control mb-2", "placeholder": "Phone", "text": "number"}
+            {"class": "form-control mb-2", "placeholder": "Phone", "required": "True"}
         )
 
         self.fields["address_line_1"].widget.attrs.update(
-            {"class": "form-control mb-2", "placeholder": "Address Line 1"}
+            {"class": "form-control mb-2", "placeholder": "Address Line 1", "required": "True"}
         )
 
         self.fields["address_line_2"].widget.attrs.update(
-            {"class": "form-control mb-2", "placeholder": "Address Line 1"}
+            {"class": "form-control mb-2", "placeholder": "Address Line 2", "required": "True"}
         )

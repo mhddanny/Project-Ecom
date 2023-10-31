@@ -28,9 +28,14 @@ SECRET_KEY =  config('SECRET_KEY')
 DEBUG = config('DEBUG', default=True, cast=bool) #True
 
 ALLOWED_HOSTS = [
-    'ec2-35-166-148-8.us-west-2.compute.amazonaws.com',
+    # 'ec2-35-166-148-8.us-west-2.compute.amazonaws.com',
     '35.163.66.179',
     '*'
+]
+
+# Testing ngrok
+CSRF_TRUSTED_ORIGINS = [
+    'https://193e-112-215-245-48.ngrok-free.app',
 ]
 
 # Application definition
@@ -231,5 +236,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MIDTRANS = {
     'MERCHANT_ID': config('MIDTRANS_MERCHANT_ID'),
     'SERVER_KEY': config('MIDTRANS_SERVER_KEY'),
-    'CLIENT_KEY': config('MIDTRANS_CLIENT_KEY'),
+    'CLIENT_KEY': config('MIDTRANS_CLIENT_KEY')
 }

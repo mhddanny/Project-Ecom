@@ -4,6 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
+# from django.views.decorators.csrf import csrf_exempt
 from store.models import Product
 
 from . forms import OrderForm
@@ -13,12 +14,8 @@ import datetime
 import json
 import uuid
 import midtransclient
+import hashlib
 
-snap = midtransclient.Snap(
-    is_production=False,
-    server_key=settings.MIDTRANS['SERVER_KEY']
-    client_key=settings.MIDTRANS['CLIENT_KEY'],
-)
 
 def payments(request):
     body = json.loads(request.body)
@@ -132,12 +129,52 @@ def place_order(request, total=0, quantity=0):
             data.save()
             
             order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+            print('order', order)
+
+            # Create Snap API instance
+            snap = midtransclient.Snap(
+                is_production=False,
+                # server_key='SB-Mid-server-LY4us9KJJfHQywCryUtfDlCf',
+                server_key=settings.MIDTRANS['SERVER_KEY'],
+            )
+            client_key= settings.MIDTRANS['CLIENT_KEY']
+            # Build API parameter
+            param = {
+                "transaction_details": {
+                    "order_id": order.id,
+                    "gross_amount": total,
+                },
+                "item_details": [{
+                    "id": cart_item.id,
+                    "price": cart_item.product.price,
+                    "quantity": cart_item.quantity,
+                    "name": cart_item.product.product_name,
+                }],
+                "credit_card":{
+                    "secure" : True
+                },
+                "customer_details":{
+                    "first_name": order.first_name,
+                    "last_name": order.last_name,
+                    "email": order.email,
+                    "phone": order.phone
+                }
+            }
+            print('param', param)
+
+            transaction = snap.create_transaction(param)
+
+            transaction_token = transaction['token']
+            print('token', transaction_token)
+            print('client', client_key)
             context = {
                 'order': order,
                 'cart_items': cart_items,
                 'tax': tax,
                 'total': total,
                 'grand_total': grand_total,
+                'token': transaction_token,
+                'client': client_key,
             }
 
             return render(request, 'orders/payments.html', context)
@@ -172,4 +209,13 @@ def order_complete(request):
         return render(request, 'orders/order_complete.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):
         return redirect('home')
-    
+
+# @csrf_exempt  
+# def callback(request):
+#     serverKey = settings.MIDTRANS['SERVER_KEY']
+#     has = hashlib.sha512(order_id+status_code+gross_amount+serverKey)
+#     if has == request.signature_key:
+#         if request.transaction_status == 'capture':
+#             order = Order.objects.get(id=order_id)
+#             order.is_ordered = True
+#             order.save()
