@@ -150,16 +150,68 @@ def place_order(request, total=0, quantity=0):
                     "quantity": cart_item.quantity,
                     "name": cart_item.product.product_name,
                 }],
-                "credit_card":{
-                    "secure" : True
-                },
                 "customer_details":{
                     "first_name": order.first_name,
                     "last_name": order.last_name,
                     "email": order.email,
                     "phone": order.phone
-                }
+                },
+                "enabled_payments": ["credit_card", "mandiri_clickpay", "cimb_clicks","bca_klikbca", "bca_klikpay", "bri_epay", "echannel", "indosat_dompetku","mandiri_ecash", "permata_va", "bca_va", "bni_va", "other_va", "gopay","kioson", "indomaret", "gci", "danamon_online"],
+                "credit_card": {
+                    "secure": True,
+                    "bank": "bca",
+                    "installment": {
+                        "required": False,
+                        "terms": {
+                            "bni": [3, 6, 12],
+                            "mandiri": [3, 6, 12],
+                            "cimb": [3],
+                            "bca": [3, 6, 12],
+                            "offline": [6, 12]
+                        }
+                    },
+                    "whitelist_bins": [
+                        "48111111",
+                        "41111111"
+                    ]
+                },
+                "bca_va": {
+                    "va_number": "12345678911",
+                    "free_text": {
+                        "inquiry": [
+                            {
+                                "en": "text in English",
+                                "id": "text in Bahasa Indonesia"
+                            }
+                        ],
+                        "payment": [
+                            {
+                                "en": "text in English",
+                                "id": "text in Bahasa Indonesia"
+                            }
+                        ]
+                    }
+                },
+                "bni_va": {
+                    "va_number": "12345678"
+                },
+                "permata_va": {
+                    "va_number": "1234567890",
+                    "recipient_name": "SUDARSONO"
+                },
+                "callbacks": {
+                    "finish": "dashboard/"
+                },
+                "expiry": {
+                    "start_time": "2025-12-20 18:11:08 +0700",
+                    "unit": "minute",
+                    "duration": 9000
+                },
+                "custom_field1": "custom field 1 content",
+                "custom_field2": "custom field 2 content",
+                "custom_field3": "custom field 3 content"
             }
+
             print('param', param)
 
             transaction = snap.create_transaction(param)
