@@ -93,13 +93,13 @@ class ProductGallery(models.Model):
 
 class ProductPaket(models.Model):    
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    max_weight = models.CharField(max_length=150, blank=True)
-    length = models.CharField(max_length=150, blank=True)
-    width = models.CharField(max_length=150, blank=True)
-    height = models.CharField(max_length=150, blank=True)
+    weight = models.IntegerField(blank=True)
+    length = models.IntegerField(blank=True)
+    width = models.IntegerField(blank=True)
+    height = models.IntegerField(blank=True)
 
     def __str__(self):
-        return self.max_weight
+        return self.product.product_name
     
     class Meta:
         verbose_name = 'Product Paket'

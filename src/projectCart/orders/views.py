@@ -144,12 +144,12 @@ def place_order(request, total=0, quantity=0):
                     "order_id": order.id,
                     "gross_amount": total,
                 },
-                "item_details": [{
-                    "id": cart_item.id,
-                    "price": cart_item.product.price,
-                    "quantity": cart_item.quantity,
-                    "name": cart_item.product.product_name,
-                }],
+                # "item_details": [{
+                #     "id": cart_item.id,
+                #     "price": cart_item.product.price,
+                #     "quantity": cart_item.quantity,
+                #     "name": cart_item.product.product_name,
+                # }],
                 "customer_details":{
                     "first_name": order.first_name,
                     "last_name": order.last_name,

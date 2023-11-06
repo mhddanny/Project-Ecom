@@ -1,10 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.conf import settings
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from store.models import Product, Variation
+from accounts.models import Province
+from store.models import Product, Variation, ProductPaket
 from . models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
+ 
+import http.client
+import json
 
 # Create your views here.
 def _cart_id(request):
@@ -196,18 +201,28 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     try:
         tax = 0
         grand_total = 0
+        total_weight = 0
+        province = Province.objects.all()
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
             cart = Cart.objects.get(cart_id=_cart_id(request))
             cart_items = CartItem.objects.filter(cart=cart, is_active=True)
-        
+
+        # Quantity
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
+        
+            # Loop ProdukPaket
+            for product in Product.objects.filter(id=cart_item.product.id):
+                for weight in ProductPaket.objects.filter(product=product).all():    
+                    sub_weight = weight.weight * cart_item.quantity  # sub_weight
+                    total_weight += sub_weight #Total Weight
+                    
         tax=(2 * total)/100
         grand_total = total + tax
-    
+        
     except ObjectDoesNotExist:
         pass
 
@@ -217,6 +232,51 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         'cart_items':cart_items,
         'tax' : tax, 
         'grand_total' : grand_total,
+        'total_weight': total_weight,
+        'prov': province,
     }
 
     return render(request, 'store/checkout.html', context)
+
+@login_required(login_url='login')
+def getCourier(request):
+    data = {}
+    if request.method == 'POST':
+        # print('data', request.POST)
+        destination = request.POST['destination']
+        weight = request.POST['weight']
+        courier = request.POST['courier']
+
+        api_Key = settings.RAJA_ONGKIR_KEY
+        conn = http.client.HTTPSConnection("api.rajaongkir.com")
+
+        payload =  "origin=152&destination="+str(destination)+"&weight="+str(weight)+"&courier="+str(courier)
+
+        headers = {
+            'key': api_Key,
+            'content-type': "application/x-www-form-urlencoded",
+            
+        }
+
+        conn.request("POST", "/starter/cost", payload, headers)
+
+        res = conn.getresponse()
+        data = res.read()
+        conn.close()
+        print('data', data.decode("utf-8") )
+        costs = json.loads(data)
+        # Loop Data Json
+        for cost in costs['rajaongkir']['results']:
+            # cost = cost['description']+' '+cost['cost'][0]['etd']+' days'
+            delivery = cost
+            print('cost', delivery)
+    
+            data = {
+                'data': delivery
+            }
+
+        response = JsonResponse(data, safe=False)
+        return response
+    else:
+        response = JsonResponse({'status':'false','message':message}, status=500)
+        return response
