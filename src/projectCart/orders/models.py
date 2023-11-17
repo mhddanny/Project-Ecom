@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Account
+from accounts.models import Account, District
 from store.models import Product, Variation
 # Create your models here.
 
@@ -8,6 +8,7 @@ class Payment(models.Model):
     payment_id = models.CharField(max_length=100)
     payment_method = models.CharField(max_length=100)
     amount_paid = models.CharField(max_length=100)
+    payment_type = models.CharField(max_length=100)
     status = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -31,13 +32,10 @@ class Order(models.Model):
     email = models.EmailField(max_length=50)
     address_line_1 = models.CharField(max_length=50)
     address_line_2 = models.CharField(max_length=50, blank=True)
-    country = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    postcode = models.CharField(max_length=20)
+    district = models.ForeignKey(District, verbose_name="District", on_delete=models.CASCADE)
     order_note = models.CharField(max_length=150, blank=True)
     order_total = models.FloatField()
-    tax = models.FloatField()
+    tax = models.FloatField(blank=True)
     status = models.CharField(max_length=10, choices=STATUS, default='NEW')
     ip = models.CharField(blank=True, max_length=20)
     is_ordered = models.BooleanField(default=False)
@@ -68,4 +66,11 @@ class OrderProduct(models.Model):
     def __str__(self):
         return self.product.product_name
 
+class OrderDelivery(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    courier = models.CharField(max_length=150)
+    cost = models.IntegerField()
+    total_weight = models.IntegerField()
 
+    def __str__(self):
+        return self.courier

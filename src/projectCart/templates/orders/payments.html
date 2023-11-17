@@ -4,33 +4,29 @@
 {% block head %}
     
 {% endblock head %}
-
+    
 {% block content %}
 
 <section class="section-content padding-y bg">
     <div class="container">
-   <!-- ============================ COMPONENT 1 ================================= -->
-   <h4 class="text-center mb-4">Review Your Order and Make Payment</h4>
+    <!-- ============================ COMPONENT 1 ================================= -->
+    <h4 class="text-center mb-4">Review Your Order and Make Payment</h4>
         <div class="row">
             <aside class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                      Billing Address
+                        Billing Address
                     </div>
                     <div class="card-body">
                         <p class="card-text mb-0">{{order.full_name}} </p>
                         <p class="card-text mb-0">{{order.full_address}} </p>
-                        <p class="card-text mb-0">{{order.city}}, {{order.postcode}} </p>
-                        <p class="card-text mb-0">{{order.country}}, {{order.state}} </p>
+                        <p class="card-text mb-0">{{order.district.province.name}}, {{order.district.city.name}}, {{order.district.city.post_code}} </p>
+                        <p class="card-text mb-0">{{order.district}} </p>
                         <p class="card-text mb-0">{{order.email}} </p>
                         <p class="card-text mb-0">{{order.phone}} </p>
                         {% if order.order_note %}
                             <b>Order Note: </b> {{order.order_note}}
                         {% endif %}
-                        
-
-
-
                     </div>
                 </div> <!-- card.// -->
                 <div class="card">
@@ -41,17 +37,14 @@
                     <div id="snap-container"></div>
 
                     <div class="card-body">
-
                         <p class="card-text">Paypal</p>
-
                     </div>
                 </div> <!-- card.// -->
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-header">
                       Review Products
                     </div>
                     <div class="card-body">
-
                         <table class="table table-borderless table-shopping-cart">
                             <thead class="text-muted">
                                 <tr class="small text-uppercase">
@@ -74,7 +67,6 @@
                                                             {{ item.varian_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
                                                         {% endfor %}
                                                     {% endif %}
-            
                                                 </p>
                                             </figcaption>
                                         </figure>
@@ -93,26 +85,123 @@
                             {% endfor %}    
                             </tbody>
                         </table>
-
                     </div>
+                    <!-- <div class="card-footer text-body-secondary">
+                        <p class="icontext"><i class="icon text-success fa fa-truck"></i> Ets Delivery within 1-2 weeks</p>
+                    </div> -->
                 </div> <!-- card.// -->
+                <div class="" id="payElement">
+                    <article class="accordion" id="accordion_pay">
+                        <!-- Bank Transfer -->
+                        <div class="card">
+                            <header class="card-header">
+                                <img src="../images/misc/payment-bank.png" class="float-right" height="24">  
+                                <label class="form-check" data-toggle="collapse" data-target="#pay_transfers">
+                                    <input class="form-check-input" name="payment-option" type="radio" value="option1">
+                                    <h6 class="form-check-label"> Bank Transfer </h6>
+                                </label>
+                            </header>
+                            <div id="pay_transfers" class="collapse show" data-parent="#accordion_pay">
+                                <div class="card-body">
+                                    <p class="text-muted">Some instructions about how to pay </p>
+                                    <div class="form-row ml-3 btn-group-toggle" data-toggle="buttons">
+                                        <label for="" class="btn btn-check btn-outline-primary mr-2 mb-2"><input type="radio" name="bca" id="bca_selector" value="bca">BCA</label>
+                                        <label for="" class="btn btn-check btn-outline-primary mr-2 mb-2"><input type="radio" name="bni" id="bni_selector" value="bni">BNI</label>
+                                        <label for="" class="btn btn-check btn-outline-primary mr-2 mb-2"><input type="radio" name="bri" id="bri_selector" value="bri">BRI</label>
+                                        <label for="" class="btn btn-check btn-outline-primary mr-2 mb-2"><input type="radio" name="echannel" id="mandiri_selector" value="echannel">Mandiri Bill</label>
+                                        <label for="" class="btn btn-check btn-outline-primary mr-2 mb-2"><input type="radio" name="permata" id="permata_selector" value="permata">PERMATA</label>
+                                        <label for="" class="btn btn-check btn-outline-primary mr-2 mb-2"><input type="radio" name="cimb" id="cimb_selector" value="cimb">CIMB</label>
+                                    </div>
+                                </div> <!-- card body .// -->
+                            </div> <!-- collapse .// -->
+                        </div> <!-- card.// -->
+                        
+                        <!-- E-Wallet -->
+                        <div class="card">
+                            <header class="card-header">
+                                <img src="../images/misc/payment-bank.png" class="float-right" height="24">  
+                                <label class="form-check" data-toggle="collapse" data-target="#pay_e-wallet">
+                                    <input class="form-check-input" name="payment-option" type="radio" value="option2">
+                                    <h6 class="form-check-label"> E-Wallet </h6>
+                                </label>
+                            </header>
+                            <div id="pay_e-wallet" class="collapse" data-parent="#accordion_pay">
+                                <div class="card-body">
+                                    <p class="text-muted">Some instructions about how to pay </p>
+                                    <div class="form-row ml-3 btn-group-toggle" data-toggle="buttons">
+                                        <label for="" class="btn btn-check btn-outline-primary mr-2"><input type="radio" name="gopay" id="gopay">GoPay</label>
+                                    </div>
+                                </div> <!-- card body .// -->
+                            </div> <!-- collapse .// -->
+                        </div> <!-- card.// -->
 
+                        <!-- card  -->
+                        <div class="card">               
+                            <header class="card-header">
+                                <img src="../images/misc/payment-card.png" class="float-right" height="24">  
+                                <label class="form-check collapsed" data-toggle="collapse" data-target="#pay_cart" aria-expanded="false">
+                                    <input class="form-check-input" name="payment-option" type="radio" value="option3">
+                                    <h6 class="form-check-label"> Credit Card </h6>
+                                </label>
+                            </header>
+                            <div id="pay_cart" class="collapse" data-parent="#accordion_pay" style="">
+                                <div class="card-body">
+                                    <p class="alert alert-success">Some information or instruction</p>
+                                    <form class="form-inline">
+                                        <input type="text" class="form-control mr-2" placeholder="xxxx-xxxx-xxxx-xxxx" name="">
+                                        <input type="text" class="form-control mr-2" style="width: 100px" placeholder="dd/yy" name="">
+                                        <input type="number" maxlength="3" class="form-control mr-2" style="width: 100px" placeholder="cvc" name="">
+                                        <button class="btn btn btn-success">Button</button>
+                                    </form>
+                                </div> <!-- card body .// -->
+                            </div> <!-- collapse .// -->
+                        </div> <!-- card.// -->
+
+                        <!-- Paypal -->
+                        <div class="card">
+                            <header class="card-header">
+                                <img src="../images/misc/payment-paypal.png" class="float-right" height="24"> 
+                                <label class="form-check" data-toggle="collapse" data-target="#pay_pal" aria-expanded="true">
+                                    <input class="form-check-input" name="payment-option" type="radio" value="option4">
+                                    <h6 class="form-check-label"> 
+                                        Paypal 
+                                    </h6>
+                                </label>
+                            </header>
+                            <div id="pay_pal" class="collapse" data-parent="#accordion_pay" style="">
+                            <div class="card-body">
+                                <p class="text-center text-muted">Connect your PayPal account and use it to pay your bills. You'll be redirected to PayPal to add your billing information.</p>
+                                <p class="text-center">
+                                    <a href="#"><img src="../images/misc/btn-paypal.png" height="32"></a>
+                                    <br><br>
+                                </p>
+                            </div> <!-- card body .// -->
+                            </div> <!-- collapse .// -->
+                        </div> <!-- card.// -->
+                    </article>
+                </div>      
             </aside> <!-- col.// -->
 
             <aside class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
+                        <h4 class="mb-3">Overview</h4>
                         <dl class="dlist-align">
-                            <dt>Total price:</dt>
-                            <dd class="text-right">Rp.{{total}}</dd>
+                            <dt class="text-muted">Total price:</dt>
+                            <dd class="text-right mr-2">Rp.{{total}}</dd>
                         </dl>
                         <dl class="dlist-align">
-                            <dt>Tax:</dt>
-                            <dd class="text-right"> Rp.{{tax}}</dd>
+                            <dt class="text-muted">Delivey Change:</dt>
+                            <dd class="text-right mr-2"> Rp. {{cost}}</dd>
                         </dl>
+                        <!-- <dl class="dlist-align">
+                            <dt class="text-muted">Tax:</dt>
+                            <dd class="text-right mr-2"> Rp.{{tax}}</dd>
+                        </dl> -->
+                        <hr>
                         <dl class="dlist-align">
                             <dt>Total:</dt>
-                            <dd class="text-right text-dark b"><strong>{{grand_total}}</strong></dd>
+                            <dd class="text-right mr-2 h5"><strong>Rp. {{all_total}}</strong></dd>
                         </dl>
                         <hr>
                         <p class="text-center mb-3">
@@ -121,6 +210,9 @@
                         <!-- midtrans -->
                         <button id="pay-button" class="btn btn-primary btn-block"> Bayar </button>
                         <!-- <input type="hidden" id="snap_token" value="{{ token }}"/> -->
+
+                        <!-- Bayar -->
+                        <button id="payButton" class="btn btn-outline-primary btn-block">Bayar</button>
 
                         <br>
                         <!-- Paypall Button -->
@@ -136,10 +228,11 @@
    
    </div> <!-- container .//  -->
 </section>
-    <!-- ========================= SECTION CONTENT END// ========================= -->
-    <script>
 
-        function getCookie(name) {
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+<script>
+
+    function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
                 const cookies = document.cookie.split(';');
@@ -155,93 +248,228 @@
             return cookieValue;
         }
 
-        var amount = "{{ grand_total }}"
-        var url = "{% url 'payments' %}"
-        var csrftoken = getCookie('csrftoken');
-        var orderID = "{{ order.order_number }}"
-        var payment_method = 'Paypal'
-        var redirect_url = "{% url 'order_complete' %}"
+    var amount = "{{ all_total }}"
+    var url = "{% url 'payments' %}"
+    var csrftoken = getCookie('csrftoken');
+    var orderID = "{{ order.order_number }}"
+    var payment_method = 'Paypal'
+    var redirect_url = "{% url 'order_complete' %}"
 
         // Render The Paypal
-        paypal.Buttons({
-            // Sets up the transaction when a payment button is clicked
-            createOrder: (data, actions) => {
-                return actions.order.create({
+    paypal.Buttons({
+        // Sets up the transaction when a payment button is clicked
+        createOrder: (data, actions) => {
+            return actions.order.create({
                 purchase_units: [{
                     amount: {
-                    value: amount, // Can also reference a variable or function
+                        value: amount, // Can also reference a variable or function
                     }
                 }]
-                });
-            },       
-            // Finalize the transaction after payer approval
-            onApprove: (data, actions) => {
-                return actions.order.capture().then(function(orderData) {
-                // Successful capture! For dev/demo purposes:        
-                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                const transaction = orderData.purchase_units[0].payments.captures[0];
-                console.log(orderData);
-                sendData()
+            });
+        },       
+         // Finalize the transaction after payer approval
+        onApprove: (data, actions) => {
+            return actions.order.capture().then(function(orderData) {
+            // Successful capture! For dev/demo purposes:        
+            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+            const transaction = orderData.purchase_units[0].payments.captures[0];
+            console.log(orderData);
+            sendData()
 
-                function sendData(){
-                    fetch(url, {
-                        method : "POST",
-                        headers: {
-                            "Content-type": "application/json",
-                            "X-CSRFToken": csrftoken,
-                        },
-                        body: JSON.stringify({
-                            orderID: orderID,
-                            transID: orderData.id,
-                            payment_method: payment_method,
-                            status: orderData.status,
-                        }),
-                    })
-                    .then((response) => response.json())
-                    .then((data )=> {
-                        console.log('Success :', data);
-                        console.log('Transaction Completed.');
-                        window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID
-                    });
-                }
-                
-                // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-                // When ready to go live, remove the alert and show a success message within this page. For example: 
-                const element = document.getElementById('paypal-button-container');
-                element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                // Or go to another URL:  actions.redirect('thank_you.html');
+            function sendData(){
+                fetch(url, {
+                    method : "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        "X-CSRFToken": csrftoken,
+                    },
+                    body: JSON.stringify({
+                        orderID: orderID,
+                        transID: orderData.id,
+                        payment_method: payment_method,
+                        status: orderData.status,
+                    }),
+                })
+                .then((response) => response.json())
+                .then((data )=> {
+                    console.log('Success :', data);
+                    console.log('Transaction Completed.');
+                    window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID
                 });
             }
+                
+            // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+            // When ready to go live, remove the alert and show a success message within this page. For example: 
+            const element = document.getElementById('paypal-button-container');
+            element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            // Or go to another URL:  actions.redirect('thank_you.html');
+            });
+        }
         
-        }).render('#paypal-button-container');
+    }).render('#paypal-button-container');
         
-    </script>
+</script>
 <!-- midtrans -->
-<script type="text/javascript">
-    // For example trigger on button clicked, or any time you need
-    var payButton = document.getElementById('pay-button');
-    payButton.addEventListener('click', function () {
-      // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
-        window.snap.pay('{{ token }}', {
+<!-- <script id="midtrans-script" type="text/javascript"
+    src="https://api.midtrans.com/v2/assets/js/midtrans-new-3ds.min.js"
+    data-environment="sandbox"
+    data-client-key="{{client}}">
+</script> -->
+<script>
+    function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+    var url_pay = "{% url 'payment' %}"
+    var csrftoken = getCookie('csrftoken');
+    var auth_server = "{{ server }}"
+    var orderID = "{{ order.order_number }}"
+    var amount = "{{ all_total }}"
+    var cardID = "{{cardID}}"
+    var redirect_url = "{% url 'payment_proses' %}"
+    var completed_url = "{% url 'order_complete' %}"
+    
+    const payButton = document.getElementById('payButton');
+    
+    const payElement = document.getElementById('payElement');
+
+    const bcaElemant = document.getElementById('bca_selector');
+    const bniElemant = document.getElementById('bni_selector');
+    const briElemant = document.getElementById('bri_selector');
+    const mandiriElemant = document.getElementById('mandiri_selector');
+    const permataElemant = document.getElementById('permata_selector');
+    const cimbElemant = document.getElementById('cimb_selector');
+    
+    function paymentProses(result) {
+        order = JSON.stringify(result.order_id)
+        console.log('order_id', order)
+
+        if (order) {
+            fetch(redirect_url,{
+                method : "POST",
+                body : JSON.stringify({
+                    "order_id": result.order_id,
+                }),
+                headers : {
+                    "Accept": "application/json",
+                    'Content-Type': 'application/json',
+                    "X-CSRFToken": csrftoken,
+                }
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Transaction', data); 
+                // statusTransaction(data)
+                window.location.href = completed_url + '?order_number='+data.order_number+'&payment_id='+data.transID
+                payButton.innerHTML = '<h3>Thank you for your payment!</h3>';
+            })
+        }
+
+    }
+
+    function transaction(data) {
+        let snapToken = data.data
+        snap.pay(snapToken, {
+            // Optional
             onSuccess: function(result){
-            /* You may add your own implementation here */
-            // sentdata()
-            alert("payment success!"); console.log(result);
+                /* You may add your own js here, this is just example */ 
+                alert("payment success!");
+                console.log('success', );
+                console.log(result);
+                paymentProses(result);
+                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+               
             },
+            // Optional
             onPending: function(result){
-            /* You may add your own implementation here */
-            alert("wating your payment!"); console.log(result);
+                /* You may add your own js here, this is just example */ 
+                alert("wating your payment!");
+                console.log('pending');
+                console.log(result);
+                paymentProses(result);
+                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
             },
+            // Optional
             onError: function(result){
-            /* You may add your own implementation here */
-            alert("payment failed!"); console.log(result);
+                /* You may add your own js here, this is just example */ 
+                alert("payment failed!");
+                console.log(result);
+                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
             },
             onClose: function(){
-            /* You may add your own implementation here */
-            alert('you closed the popup without finishing the payment');
+                console.log('customer closed the popup without finishing the payment');
+                alert('you closed the popup without finishing the payment');
             }
+        });
+    }
+
+    function sendData() {
+        fetch(url_pay, {
+            method : "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json",
+                "X-CSRFToken": csrftoken,
+                "Authorization": "Basic"+ auth_server,
+            },
+            body: JSON.stringify({
+                orderID: orderID,
+                amount: amount,
+                cardID: cardID,
+            }),
         })
-    });
+        .then((response) => response.json())
+        .then((data )=> {
+            console.log('Success :', data);
+            transaction(data)  
+        })
+        .catch((error) => {
+            console.error("Error:", error)
+        });      
+    }
+
+    payButton.addEventListener('click', function (event) {
+        // if (bcaElemant.checked == true) {
+        //     var pay = bcaElemant.value
+        //     console.log('pay', pay)
+        //     sendData()
+        // }else if (bniElemant.checked == true) {
+        //     var pay = bniElemant.value
+        //     console.log('pay', pay)
+        //     sendData()
+        // }else if (briElemant.checked == true) {
+        //     var pay = briElemant.value
+        //     console.log('pay', pay)
+        //     sendData()
+        // }else if (mandiriElemant.checked == true) {
+        //     var pay = mandiriElemant.value
+        //     console.log('pay', pay)
+        //     sendData()
+        // }else if (permataElemant.checked == true) {
+        //     var pay = permataElemant.value
+        //     console.log('pay', pay)
+        //     sendData()
+        // }else if (cimbElemant.checked == true) {
+        //     var pay = cimbElemant.value
+        //     console.log('pay', pay)
+        //     sendData()
+        // }
+
+        sendData()
+    })
+    
 </script>
 
 {% endblock content %}

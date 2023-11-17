@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('post_code', models.CharField(max_length=20)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('province_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.province')),
+                ('province', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.province')),
             ],
         ),
         migrations.CreateModel(
@@ -30,8 +30,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('city_id', models.ForeignKey(max_length=10, on_delete=django.db.models.deletion.CASCADE, to='accounts.city')),
-                ('province_id', models.ForeignKey(max_length=10, on_delete=django.db.models.deletion.CASCADE, to='accounts.province')),
+                ('city', models.ForeignKey(max_length=10, on_delete=django.db.models.deletion.CASCADE, to='accounts.city')),
+                ('province', models.ForeignKey(max_length=10, on_delete=django.db.models.deletion.CASCADE, to='accounts.province')),
             ],
         ),
     ]

@@ -232,14 +232,6 @@ def resetPassword(request):
         return render(request, 'accounts/resetPassword.html')
 
 @login_required(login_url='login')
-def my_orders(request):
-    orders = Order.objects.filter(user=request.user.id, is_ordered=True).order_by('-created_at')
-    context = {
-        'orders': orders
-    }
-    return render(request, 'accounts/my_orders.html', context)
-
-@login_required(login_url='login')
 def edit_profile(request):
     userprofile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
@@ -396,23 +388,6 @@ def change_password(request):
             return redirect('change_password')
 
     return render(request, 'accounts/change_password.html')
-
-@login_required(login_url='login')
-def order_detail(request, order_id):
-    order_detail = OrderProduct.objects.filter(order__order_number=order_id)
-    order = Order.objects.get(order_number=order_id)
-    
-    subtotal = 0 
-    for i in order_detail:
-        subtotal += i.product_price * i.quantity
-
-    context = {
-        'order_detail': order_detail,
-        'order': order,
-        'subtotal': subtotal
-    }
-
-    return render(request, 'accounts/order_detail.html', context)
 
 #user_wislist
 @login_required

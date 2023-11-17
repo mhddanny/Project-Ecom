@@ -180,8 +180,8 @@ def cart(request, total=0, quantity=0, cart_items=None):
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
-        tax=(2 * total)/100
-        grand_total = total + tax
+        # tax=(2 * total)/100
+        grand_total = total # + tax
     
     except ObjectDoesNotExist:
         pass
@@ -190,7 +190,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         'total':total,
         'quantity':quantity,
         'cart_items':cart_items,
-        'tax' : tax, 
+        # 'tax' : tax, 
         'grand_total' : grand_total,
     }
     return render(request, 'store/cart.html', context)
@@ -220,8 +220,8 @@ def checkout(request, total=0, quantity=0, cart_items=None):
                     sub_weight = weight.weight * cart_item.quantity  # sub_weight
                     total_weight += sub_weight #Total Weight
                     
-        tax=(2 * total)/100
-        grand_total = total + tax
+        # tax=(2 * total)/100
+        grand_total = total # + tax
         
     except ObjectDoesNotExist:
         pass
@@ -230,7 +230,7 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         'total':total,
         'quantity':quantity,
         'cart_items':cart_items,
-        'tax' : tax, 
+        # 'tax' : tax, 
         'grand_total' : grand_total,
         'total_weight': total_weight,
         'prov': province,
@@ -263,14 +263,13 @@ def getCourier(request):
         res = conn.getresponse()
         data = res.read()
         conn.close()
-        print('data', data.decode("utf-8") )
+        # print('data', data.decode("utf-8") )
         costs = json.loads(data)
         # Loop Data Json
         for cost in costs['rajaongkir']['results']:
             # cost = cost['description']+' '+cost['cost'][0]['etd']+' days'
             delivery = cost
-            print('cost', delivery)
-    
+            # print('cost', delivery)  
             data = {
                 'data': delivery
             }

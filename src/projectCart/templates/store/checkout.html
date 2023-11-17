@@ -4,6 +4,7 @@
 {% block content %}
 
 <section class="section-content padding-y bg">
+    {% include 'includes/alerts.html' %}
     <div class="container">
    <!-- ============================ COMPONENT 1 ================================= -->
         
@@ -27,7 +28,7 @@
                     </div>
                 </div> <!-- card.// -->
                 <!-- Bill Address -->
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <h4 class="card-title mb-4">Billing Address</h4>
                             <div class="form-row">
@@ -112,51 +113,10 @@
                         
                     </div>
                 </div> <!-- card.// -->
-            </aside> <!-- col.// -->
-            
-            <aside class="col-lg-6">
-                <!-- Ongkir -->
-                <div class="card">
+                <!-- Delivery -->
+                <div class="card mb-3">
                     <div class="card-body">
-                        
-                        <!-- <table class="table table-borderless table-shopping-cart">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase">
-                                    <th width="130">Courier</th>
-                                    <th width="150">Weight</th>
-                                    <th width="150">Ongkos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <select class="form-control" name="courier" id="courier" >
-                                            <option value="">-- Null --</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a name="weight"><span id="weight">{{total_weight}} gram</span></a>
-                                    </td>
-                                    <td> 
-                                        <span id="ongkir">Rp. 0</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                </tr> 
-                            </tbody>
-                        </table> -->
-
-                        <div class="form-row">
-                            <div class="col form-group">
-                                <label for="">Weight :</label>
-                                <span class="d-inline-flex p-2"><strong>{{total_weight}} </strong>gram</span>
-                            </div>
-                            <div class="col form-group">
-                                <label for="">Cost :</label>
-                                <span class="d-inline-flex p-2" name="ongkir"><strong id="ongkir">Rp. 0</strong></span>
-                            </div>
-                        </div>
-
+                        <h4 class="mb-3">Delivery</h4>
                         <div class="form-row">
                             <div class="col form-group">
                                 <label for="">Courier</label>
@@ -166,14 +126,11 @@
                             </div>
                             <div class="col form-group">
                                 <label for="">Service</label>
-                                <select class="form-control" name="service" id="service" required>
+                                <select class="form-control" name="cost" id="service" required>
                                     <option value="">--Null--</option>
                                 </select>
                             </div>
-
                         </div>
-                        
-                        
                         <br>
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -187,6 +144,30 @@
                                 <tr></tr>
                             </tbody>
                         </table>
+                    </div> <!-- card-body.// -->
+                </div> <!-- card.// -->
+            </aside> <!-- col.// -->
+            
+            <aside class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-3">Info Delivery</h4>
+                            <div class="form-group">
+                                <dl class="dlist-align ml-4">
+                                    <dt class="text-muted">Total Weight:</dt>
+                                    <input type="text" name="total_weight" id="" value="{{total_weight}}" hidden>
+                                    <dd class=""><strong name="total_weight" >{{total_weight}}</strong>gram</dd>
+                                </dl>
+                                <dl class="dlist-align ml-4">
+                                    <dt class="text-muted">courier:</dt>
+                                    <dd class=""><strong id="courier_ket">---</strong></span></dd>
+                                </dl>
+                                <dl class="dlist-align ml-4">
+                                    <dt class="text-muted">Cost:</dt>
+                                    <dd class=""><strong id="ongkir">Rp. 0</strong></span></dd>
+                                </dl>
+                            </div>
+                        
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->
                 <br>
@@ -321,7 +302,7 @@
                 type: "GET",
                 data: { city_id: $(this).val() },
                 success: function(html){
-                    console.log(html)
+                    // console.log(html)
                     $('#district_id').empty()
                     $('#district_id').append('<option value="">Pilih Kecamatan</option>')
                     $('#courier').empty()
@@ -360,6 +341,9 @@
         })
         // JIKA KURIR DIPILIH
         $('#courier').on('change', function() {
+        
+            $('#courier_ket').text($(this).val());
+
         //MENGIRIM PERMINTAAN KE SERVER UNTUK MENGAMBIL DATA API
         $.ajax({
             url: "/cart/cost/",
@@ -374,7 +358,7 @@
             },
             success: function(html){
                 //BERSIHKAN AREA SELECT BOX
-                console.log('data', html)
+                // console.log('data', html)
 
                 $('#service').empty()              
                 $('#service').append('<option value="">Pilih Service</option>')
@@ -382,7 +366,7 @@
                 //LOOPING DATA ONGKOS KIRIM
                 
                 $.each(html.data.costs, function(key, item) {
-                    console.log('data', html)
+                    // console.log('data', html)
                     let service = item.service
                     let description = item.description
                     let cost = item.cost[0]['value']
@@ -398,7 +382,8 @@
                     );
                     //updata service
                     $('#service').append(
-                        '<option value="'+cost+'">('+service+') '+description+'</option>');
+                        '<option value="'+cost+'">('+service+') '+description+' </option>');
+                    
                 })
             
             }
@@ -408,7 +393,6 @@
         $('#service').on('change', function () {              
             let split = $(this).val().split('-')
             $('#ongkir').text('Rp. ' + split[0]);
-
         })
 
     });
