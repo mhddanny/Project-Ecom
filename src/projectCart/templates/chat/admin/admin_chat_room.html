@@ -5,6 +5,25 @@
 	Ar-Rasyiid | Chat Room
 {% endblock title %}
 {% block content %}
+<style>
+    [data-initials]:before {
+        background: #099bdd;
+        color: white;
+        opacity: 1; 
+        content: attr(data-initials); 
+        display: inline-block; 
+        font-weight: 600; 
+        border-radius: 50%; 
+        vertical-align: middle; 
+        margin-right: 0.5em; 
+        width: 50px; 
+        height: 50px; 
+        line-height: 50px; 
+        text-align: center; 
+        margin: 5px 8px;
+    }
+</style>
+
 
 <!-- ========================= SECTION PAGETOP ========================= -->
 <section class="section-pagetop bg">
@@ -47,23 +66,25 @@
 
                                     {% if not message.created_by %}
                                         <div class="d-flex flex-row justify-content-start mb-4">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                                alt="avatar 1" style="width: 45px; height: 100%;" class="mr-2">
-                                            
+                                            <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+                                                alt="avatar 1" style="width: 45px; height: 100%;" class="mr-2"> -->
+                                            <div data-initials="{{message.send_by|initials}}"></div>
                                             <div>
-                                                <p class="small p-2 ms-3 mb-1 rounded-xl" style="background-color: #ffffff;">{{message.body}}</p>
-                                                <p class="small ms-3 mb-3 rounded-3 text-muted">{{ message.created_at|timesince }} ago</p>
+                                                <p class="small p-2 ms-3 mb-1 mt-3 rounded-xl" style="background-color: #ffffff;">{{message.body}}</p>
+                                                <p class="small ms-3 rounded-3 text-muted">{{ message.created_at|timesince }} ago</p>
                                             </div>
                                         </div>
                                     {% else %}
                                     
                                         <div class="d-flex flex-row justify-content-end mb-4">
                                             <div>
-                                                <p class="small p-2 me-3 mb-1 text-white rounded-3" style="background-color: #349afa;">{{message.body}}</p>
-                                                <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">{{message.created_at|timesince}} ago</p>
+                                                <p class="small p-2 me-3 mb-1 mt-3 text-white rounded-3" style="background-color: #349afa;">{{message.body}}</p>
+                                                <p class="small me-3 rounded-3 text-muted d-flex justify-content-end">{{message.created_at|timesince}} ago</p>
                                             </div>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
-                                                alt="avatar 1" style="width: 45px; height: 100%;" class="ml-2">
+                                            <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"
+                                                alt="avatar 1" style="width: 45px; height: 100%;" class="ml-2"> -->
+                                            <div data-initials="{{message.send_by|initials}}"></div>
+                                            
                                         </div>
 
                                     {% endif %}
@@ -81,7 +102,7 @@
                         <div class="col-md-12" >
                             <div class="input-group">
                                 <input type="text" name="body" id="chat_message_input" class="form-control" placeholder="messages">
-                                <button id="chat_message_submit" class="btn btn-outline-secondary" type="submit">Button</button>
+                                <button id="chat_message_submit" class="btn btn-outline-primary" type="submit"><i class="fas fa-paper-plane"></i></button>
                               </div>
                         </div>
                     </div> <!-- row.// -->

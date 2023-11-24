@@ -27,7 +27,7 @@ def chatAdmin(request):
 
     context = {
         'rooms': rooms,
-        'users': users
+        'users': users,
     }
 
     return render(request, 'chat/admin/chat_admin.html', context)
