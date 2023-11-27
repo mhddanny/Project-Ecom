@@ -9,6 +9,7 @@ from carts.models import CartItem
 from . models import Product, ReviewRating, ProductGallery
 from . forms import ReviewForm
 from orders.models import OrderProduct
+from django.db.models import Sum
 
 # Create your views here.
 def store(request, category_slug=None):
@@ -50,6 +51,9 @@ def product_detail(request, category_slug, product_slug):
     else:
         orderproduct = None
 
+    # OrderProduct
+    quantityAll = OrderProduct.objects.filter(product=single_product.id).aggregate(s=Sum('quantity'))['s']
+
     # Get The reviews
     reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
 
@@ -63,6 +67,7 @@ def product_detail(request, category_slug, product_slug):
         'reviews': reviews,
         'product_gallery': product_gallery,
         'products': products,
+        'quantityAll': quantityAll,
         }
 
     return render(request, 'store/product_detail.html', context)
