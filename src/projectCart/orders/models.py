@@ -64,7 +64,7 @@ class OrderProduct(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.product.product_name
+        return self.order.order_number
 
 class OrderDelivery(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE)

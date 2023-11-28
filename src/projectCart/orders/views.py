@@ -629,13 +629,61 @@ def order_complete(request):
 #             order.save()
 
 @login_required(login_url='login')
-def my_orders(request):
-    orders = Order.objects.filter(user=request.user.id, is_ordered=True).order_by('-created_at')
-    
+def order_pending(request):
+    try:
+        orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='NEW').order_by('-created_at')
+    except ObjectDoesNotExist:
+        pass
+        
     context = {
         'orders': orders
     }
-    return render(request, 'orders/my_order/index.html', context)
+    return render(request, 'orders/my_order/pending.html', context)
+
+def order_proses(request):
+    try:
+        orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='ACCEPTED').order_by('-created_at')
+    except ObjectDoesNotExist:
+        pass
+
+    context = {
+        'orders': orders
+    }
+    return render(request, 'orders/my_order/proses.html', context)
+
+@login_required(login_url='login')
+def order_comleted(request):
+    try:
+        orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='COMPLETED').order_by('-created_at')
+    except ObjectDoesNotExist:
+        pass
+
+    context = {
+        'orders': orders
+    }
+    return render(request, 'orders/my_order/completed.html', context)
+
+@login_required(login_url='login')
+def order_cencelled(request):
+    try:
+        orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='CANCELLED').order_by('-created_at')
+    except ObjectDoesNotExist:
+        pass
+
+    context = {
+        'orders': orders
+    }
+    return render(request, 'orders/my_order/cancelled.html', context)
+
+@login_required(login_url='login')
+def order_history(request, order_id):
+    order = Order.objects.filter(order_number=order_id)
+    order_detail = OrderProduct.objects.filter(order__order_number=order_id)
+    context = {
+        'order': order,
+        'order_detail': order_detail,
+    }
+    return render(request, 'orders/my_order/order_history.html', context)
 
 @login_required(login_url='login')
 def order_detail(request, order_id):
