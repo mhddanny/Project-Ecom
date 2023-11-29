@@ -2,6 +2,7 @@ from carts.models import Cart, CartItem
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
@@ -31,8 +32,6 @@ MIDTRANS_SNAP = midtransclient.Snap(
     server_key=settings.MIDTRANS['SERVER_KEY'],
     client_key=settings.MIDTRANS['CLIENT_KEY'],
 )
-
-
 
 def payments(request):
     body = json.loads(request.body)
@@ -629,9 +628,41 @@ def order_complete(request):
 #             order.save()
 
 @login_required(login_url='login')
-def order_pending(request):
+def status_pending(request):
     try:
         orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='NEW').order_by('-created_at')
+        for order in orders:
+            order_ID = order.id
+            number = order.order_number
+            order = Order.objects.get(user=request.user.id, order_number=number)
+            status = MIDTRANS_CORE.transactions.status(str(order.order_number))
+            transaction_status = status['transaction_status']    
+            payment_id = Payment.objects.get(payment_id=status['transaction_id'])
+
+            if transaction_status == 'cancel' or transaction_status == 'deny' or transaction_status == 'expire':
+                # Updata Payment
+                payment = payment_id
+                payment.status = transaction_status
+                payment.save()
+
+                #Updata Order
+                order = Order.objects.get(user=request.user.id, order_number=number)
+                print(order)
+                order.payment = payment
+                order.status = 'CANCELLED'
+                order.is_ordered = False
+                order.save()
+                
+                for order_product in order.orderproduct_set.all(): #loop orderPorduct
+                    order_pro_id = order_product.id  #Get Order Product Id
+                    product_id = order_product.product.id #Get Product Id
+                    quantity = order_product.quantity #Get Product Qunatity
+
+                    #Updata Product Quantity
+                    product = Product.objects.get(id=product_id) 
+                    product.stock += quantity
+                    product.save()
+
     except ObjectDoesNotExist:
         pass
         
@@ -640,7 +671,8 @@ def order_pending(request):
     }
     return render(request, 'orders/my_order/pending.html', context)
 
-def order_proses(request):
+@login_required(login_url='login')
+def status_proses(request):
     try:
         orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='ACCEPTED').order_by('-created_at')
     except ObjectDoesNotExist:
@@ -652,7 +684,7 @@ def order_proses(request):
     return render(request, 'orders/my_order/proses.html', context)
 
 @login_required(login_url='login')
-def order_comleted(request):
+def status_comleted(request):
     try:
         orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='COMPLETED').order_by('-created_at')
     except ObjectDoesNotExist:
@@ -664,9 +696,9 @@ def order_comleted(request):
     return render(request, 'orders/my_order/completed.html', context)
 
 @login_required(login_url='login')
-def order_cencelled(request):
+def status_cencelled(request):
     try:
-        orders = Order.objects.filter(user=request.user.id, is_ordered=True, status='CANCELLED').order_by('-created_at')
+        orders = Order.objects.filter(user=request.user.id, status='CANCELLED').order_by('-created_at')
     except ObjectDoesNotExist:
         pass
 
@@ -735,3 +767,20 @@ def order_detail(request, order_id):
     }
 
     return render(request, 'orders/my_order/order_detail.html', context)
+
+@login_required(login_url='login')
+def my_transaction(request):
+    transaction_list = Order.objects.filter(user=request.user.id, is_ordered=True).order_by('-created_at')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(transaction_list, 10)
+    try:
+        orders = paginator.page(page)
+    except PageNotAnInteger:
+        orders = paginator.page(1)
+    except EmptyPage:
+        orders = paginator.page(paginator.num_pages)
+        
+    context = {
+        'orders': orders
+    }
+    return render(request, 'orders/my_transaction/index.html', context)

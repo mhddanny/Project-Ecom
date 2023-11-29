@@ -5,27 +5,31 @@
             active
             {% endif %}" href="{% url 'dashboard' %}"> Dashboard 
         </a>
+        <!-- My-Order -->
         <a class="list-group-item {% if '/my_orders/' in request.path %}
             active 
             {% endif %}" href="{% url 'my_orders' %}"> My Order 
         </a>
-
+        <!-- My-Transaction -->
+        <a class="list-group-item {% if '/my_transaction/' in request.path %}
+            active 
+            {% endif %}" href="{% url 'my_transaction' %}"> My Transaction 
+        </a>
         <!-- WISLIST -->
         <a class="list-group-item {% if '/my_wishlists/' in request.path %}
             active
             {% endif %}" href="{% url 'my_wishlists' %}"> My Wish list 
         </a>
-
+        <!-- Edit Proifile -->
         <a class="list-group-item {% if '/edit_profile/' in request.path %}
             active
             {% endif %}" href="{% url 'edit_profile' %}"> Edit Prodile
         </a>
-
+        <!-- Address -->
         <a class="list-group-item {% if '/address/' in request.path %}
             active
             {% endif %}" href="{% url 'address' %}"> Address Delivery
         </a>
-
         <!-- room Chat -->
         <a class="list-group-item {% if '/chat-admin/' in request.path %}
             active

@@ -29,13 +29,21 @@ DEBUG = config('DEBUG', default=True, cast=bool) #True
 
 ALLOWED_HOSTS = [
     # 'ec2-35-166-148-8.us-west-2.compute.amazonaws.com',
-    '35.163.66.179',
     '*'
 ]
+CORS_ALLOWED_ORIGINS = ["http://localhost:8080", "http://127.0.0.1:8080"]
+
+CORS_ORIGIN_WHITELIST = (
+
+    'localhost:8080',
+    'localhost:8081',
+    'localhost',
+    'localhost:8888',
+)
 
 # Testing ngrok
 CSRF_TRUSTED_ORIGINS = [
-    'https://193e-112-215-245-48.ngrok-free.app',
+    'https://0afc-112-215-245-68.ngrok-free.app'
 ]
 
 # Application definition

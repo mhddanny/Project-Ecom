@@ -10,42 +10,6 @@
         <div class="row">
             {% include 'accounts/dashboard_slide.html' %}
             <main class="col-md-9">
-                <article class="card mb-2">
-                    <header class="card-header">
-                        <strong class="d-inline-block mr-3">Your Order history:</strong>
-                        <span>{{user.full_name}}</span>
-                    </header>
-                    <div class="card-body">
-                        <div class="row"> 
-                            <div class="col-md-12">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Order #</th>
-                                        <th scope="col">Billing Name</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Order Total</th>
-                                        <th scope="col">Date</th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody id="order_full">
-                                        {% for order in orders %}
-                                        <tr>
-                                            <th scope="row"><a href="{% url 'order_history' order.order_number %}">{{order.order_number}}</a></th>
-                                            <td>{{order.full_name}}</td>
-                                            <td>{{order.phone}}</td>
-                                            <td>Rp. {{order.order_total}}</td>
-                                            <td>{{order.created_at}}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> <!-- row.// -->
-                    </div> <!-- card-body .// -->
-                </article> <!-- order-group.// --> 
-
                 <div class="card">
                     <div class="card-header">
                         {% include 'orders/my_order/navbar/header.html' %}
@@ -136,8 +100,8 @@
                             </article> <!-- order-group.// --> 
                             {% endfor %}
                         {% endif %}
+                    </div>
                 </div>
-
             </main>
         </div> <!-- row.// -->
     </div>
