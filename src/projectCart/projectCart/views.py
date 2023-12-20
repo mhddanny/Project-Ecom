@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from store.models import Product, ReviewRating
+from category.models import Category
 
 def home (request):
-    products = Product.objects.all().filter(is_available=True).order_by('created_date')
+    category = Category.objects.get(id=3)
+    print(category)
+    products = Product.objects.all().filter(is_available=True).order_by('created_date')[:6]
 
     # Descending Order
-    new_product = Product.objects.all().filter(is_available=True).order_by('-created_date')[:4]
+    new_product = Product.objects.all().filter(is_available=True).order_by('-created_date')[:3]
 
     # Get The reviews
     reviews = None
@@ -14,6 +17,7 @@ def home (request):
 
 
     context = {
+        'category': category,
         'products': products,
         'reviews': reviews,
         'new_product': new_product 

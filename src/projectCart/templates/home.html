@@ -3,6 +3,8 @@
 {% block title %}
 	Ar-Rasyiid | Home
 {% endblock title %}
+
+
 {% block content %}
 <!-- ========================= SECTION MAIN ========================= -->
 <section class="section-intro padding-y-sm py-5">
@@ -27,9 +29,9 @@
 
 <!-- Start Categories of The Month -->
 <section class="container py-5">
-	<div class="row text-center pt-3">
+	<div class="row text-center pt-3 mb-3">
 		<div class="col-lg-6 m-auto">
-			<h1 class="h1">Categories of Moslem</h1>
+			<h1 class="h1 mb-4">Categories of Moslem</h1>
 			<p>
 				Temukan pakain style dan trendi namun
 				tetap Syariah.
@@ -38,13 +40,19 @@
 	</div>
 	<div class="row">
 		{% for category in links %}
-		<div class="col-12 col-md-3 p-5 mt-3  text-center">
-			<a href="{{ category.get_url }}"><img src="{{category.cat_image.url}}" class="rounded-circle img-fluid border" style="width: 100px;"></a>
-			<h6 class="text-center mt-3 mb-3">{{category.category_name}}</h6>
-			<p class="text-center"><a href="{{ category.get_url }}" class="btn btn-primary">Go Shop</a></p>
+		<div class="col-md-4">
+			<!-- ============================ COMPONENT BANNER 1 ================================= -->
+			<div class="card-banner mb-3" style="height:220px; background-image: url({{category.cat_image.url}});">
+				<article class="card-body caption">
+					<h5 class="card-title">{{category.category_name}}</h5>
+					<p>{{category.description}}</p>
+					<a href="{{ category.get_url }}" class="btn btn-warning"> View more </a>
+				</article>
+			</div>
+			
+			<!-- ======================= COMPONENT BANNER 1  END .// ============================ -->
 		</div>
 		{% endfor %}
-	</div>
 </section>
 <!-- End Categories of The Month -->
 
@@ -60,7 +68,7 @@
 <!-- ========================= SECTION MAIN END// ========================= -->
 
 <!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y-sm">
+<section class="section-name padding-y-sm py-5">
 	<div class="container">
 		<header class="section-heading">
 			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
@@ -69,12 +77,12 @@
 
 		<div class="row">
 			{% for obj in products %}
-			<div class="col-md-3">
-				<div class="card card-product-grid">
-					<a href="{{  obj.get_url }}" class="img-wrap"> <img src="{{ obj.images.url }}"> </a>
-					<figcaption class="info-wrap">
-						<a href="./product-detail.html" class="title">{{obj.product_name}}</a>
-						<div class="price mt-1">Rp. {{obj.price}}</div> <!-- price-wrap.// -->
+			<div class="col-md-4">
+			<!-- ============================ COMPONENT BANNER 4 ================================= -->
+				<div class="card-banner">
+					<div class="card-body" style="height:300px; background-image: url({{obj.images.url}});"> </div>
+					<div class="text-bottom"><h5 class="title">{{obj.product_name}}</h5>
+						<p>{{obj.description}} <br> Rp. {{obj.price}}</p>
 						<div class="rating-star">
 							<span>
 								<i class="fa fa-star{% if obj.avrageReview < 0.5 %}-o{% elif obj.avrageReview >= 0.5 and obj.avrageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
@@ -84,12 +92,13 @@
 								<i class="fa fa-star{% if obj.avrageReview < 4.5 %}-o{% elif obj.avrageReview >= 4.5 and obj.avrageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
 							</span>
 						</div>
-					</figcaption>
+					</div>
+					
 				</div>
+			<!-- ======================= COMPONENT BANNER 4  END .// ============================ -->
 			</div> <!-- col.// -->
-				
 			{% endfor %}
-		</div> <!-- row.// -->
+		</div>
 
 	</div><!-- container // -->
 </section>
@@ -98,18 +107,79 @@
 <!-- ========================= SECTION NEW PRODUCTS ========================= -->
 <section class="section-name padding-y-sm py-5">
 	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<!-- ============================ COMPONENT BANNER 7 ================================= -->
+				<div class="card-banner" style="min-height:230px; background-image: url('static/images/banners/banner1.jpg');">
+					<div class="card-img-overlay white">
+						<h3 class="card-title">Koko Batik Modren<br> right now</h3>
+						<p class="card-text" style="max-width: 400px">Koko Batik merupakan perpaduan batik tulis yang bisa dipakai secara formal maupun non-formal.</p>
+						<a href="" class="btn btn-warning">Learn more</a>
+					</div>
+				</div>
+		<!-- ============================ COMPONENT BANNER 7  END .// =========================== -->
+			</div> <!-- col.// -->
+			<div class="col-md-4">
+				<!-- ============================ COMPONENT BANNER 8  ================================= -->
+				<div class="card-banner" style="min-height:230px; background-image: url('static/images/banners/banner-ramadhan.png');">
+				<div class="card-img-overlay text-white">
+					<h5 class="card-title">Best products</h5>
+					<p class="card-text">No matter how far along you are in your sophistication as an amateur astronomer, there is always one.</p>
+				</div>
+				</div>
+				<!-- ============================ COMPONENT BANNER 8  END .// ================================= -->
+			</div> <!-- col.// -->
+		</div>
+		<br>
+		<div class="row" >
+			<video
+				id="my-video"
+				class="video-js"
+				controls
+				preload="auto"
+				width="720"
+				height="405"
+				poster="{{category.cat_image.url}}"
+				data-setup='{"playbackRates": [0.5, 1, 1.5, 2]}'
+			>
+				<source src="/media/{{category.video_file}}" type="video/mp4" />
+				<p class="vjs-no-js">
+				To view this video please enable JavaScript, and consider upgrading to a
+				web browser that
+				<a href="https://videojs.com/html5-video-support/" target="_blank"
+					>supports HTML5 video</a
+				>
+				
+				</p>
+			</video>
+		</div>
+
+	</div><!-- container // -->
+</section>
+
+
+<!-- ========================= SECTION NEW PRODUCTS ========================= -->
+<section class="section-name padding-y-sm py-5">
+	<div class="container">
 		<header class="section-heading">
-			<h3 class="section-title">New Products</h3>
+			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
+			<div class="text-center">
+				<h3 class="section-title text-center">New Products</h3>
+				<p class="text-center">
+					Temukan product terbaru kami sekarang juga !!!.
+				</p>
+			</div>
 		</header><!-- sect-heading -->
 
 		<div class="row">
 			{% for obj in new_product %}
-			<div class="col-md-3">
-				<div class="card card-product-grid">
-					<a href="{{  obj.get_url }}" class="img-wrap"> <img src="{{ obj.images.url }}"> </a>
-					<figcaption class="info-wrap">
-						<a href="./product-detail.html" class="title">{{obj.product_name}}</a>
-						<div class="price mt-1">Rp. {{obj.price}}</div> <!-- price-wrap.// -->
+			<div class="col-md-4">
+			<!-- ============================ COMPONENT BANNER 4 ================================= -->
+				<a href="">
+				<div class="card-banner" style="height:300px; background-image: url({{obj.images.url}});">
+					<article class="caption bottom">
+						<h5 class="card-title">{{obj.product_name}}</h5>
+						<p>Rp. {{obj.price}}</p>
 						<div class="rating-star">
 							<span>
 								<i class="fa fa-star{% if obj.avrageReview < 0.5 %}-o{% elif obj.avrageReview >= 0.5 and obj.avrageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
@@ -119,12 +189,13 @@
 								<i class="fa fa-star{% if obj.avrageReview < 4.5 %}-o{% elif obj.avrageReview >= 4.5 and obj.avrageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
 							</span>
 						</div>
-					</figcaption>
+					</article>
 				</div>
+				</a>
+			<!-- ======================= COMPONENT BANNER 4  END .// ============================ -->
 			</div> <!-- col.// -->
-				
 			{% endfor %}
-		</div> <!-- row.// -->
+		</div>
 
 	</div><!-- container // -->
 </section>
