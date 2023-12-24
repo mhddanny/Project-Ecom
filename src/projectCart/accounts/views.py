@@ -123,6 +123,11 @@ def login(request):
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
             url = request.META.get('HTTP_REFERER')
+            print(user.is_admin)
+            
+            if user.is_admin == True:
+                return redirect('dashboard_admin')
+            
             try:
                 query = requests.utils.urlparse(url).query
                 # next=/cart/checkout/
@@ -131,7 +136,7 @@ def login(request):
                     nextPage = params['next']
                     return redirect(nextPage)
             except:
-                return redirect('dashboard')
+                return redirect('dashboard')           
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('login') 
@@ -409,5 +414,3 @@ def my_wishlists(request):
         "wishlist": product
     }
     return render(request, 'accounts/my_wishlist.html', context)
-
-    

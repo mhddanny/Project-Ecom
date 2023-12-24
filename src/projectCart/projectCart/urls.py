@@ -19,6 +19,8 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     #chat
     path('', include('chat.urls')),
+    #admin
+    path('app/', include('appadmin.urls')),
 ] 
 
 if settings.DEBUG:

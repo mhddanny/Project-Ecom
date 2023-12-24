@@ -65,7 +65,7 @@ class RegisterForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ('first_name', 'last_name', 'phone_number')
+        fields = ('email','first_name', 'last_name', 'phone_number')
 
     def __init__(self, *args, **kwargs):
         super(UserForm,self).__init__(*args, **kwargs)
@@ -85,12 +85,6 @@ class UserProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs['class'] = 'form-control'
 
 class UserAddressForm(forms.ModelForm):
-    # province = forms.ModelChoiceField(queryset=Province.objects.all(), empty_label="--Provice--")
-    # city = forms.ModelChoiceField(queryset=city.objects.all(), empty_label="--Null--")
-    # district = forms.ModelChoiceField(queryset=district.objects.all(), empty_label="--Null--")
-    
-    
-
     class Meta:
         model = Address
         fields = ['name', 'phone', 'address_line_1', 'address_line_2', 'district']
