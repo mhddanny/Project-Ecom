@@ -1,7 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template import loader
 
 from accounts.models import UserProfile
+from store.models import Product
 
 from . forms import UserForm, UserProfileForm
 
@@ -11,12 +15,22 @@ def dashboard_admin(request):
     return render (request, 'appadmin/dashboard.html')
 
 @login_required
-def customer(request):
-    return render (request, 'appadmin/product/index.html')
+def orders(request):
+    return render(request, 'appadmin/orders/index.html')
+
 
 @login_required
-def product(request):
-    return render (request, 'appadmin/product/index.html')
+def products(request):
+    context = {}
+    products = Product.objects.all().filter(is_available=True).order_by('id')
+    paginator = Paginator(products, 10)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = products.count()
+    
+    context = {'products': paged_products, 'product_count': product_count}
+        
+    return render(request, 'appadmin/product/index.html', context)
 
 @login_required
 def profile(request):
