@@ -20,7 +20,7 @@ urlpatterns = [
     #chat
     path('', include('chat.urls')),
     #admin
-    path('app/', include('appadmin.urls')),
+    path('app-admin/', include('appadmin.urls')),
 ] 
 
 if settings.DEBUG:

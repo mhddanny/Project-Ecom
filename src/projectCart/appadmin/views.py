@@ -8,15 +8,15 @@ from . forms import UserForm, UserProfileForm
 
 @login_required
 def dashboard_admin(request):
-    return render (request, 'admin/dashboard.html')
+    return render (request, 'appadmin/dashboard.html')
 
 @login_required
 def customer(request):
-    return render (request, 'admin/product/index.html')
+    return render (request, 'appadmin/product/index.html')
 
 @login_required
 def product(request):
-    return render (request, 'admin/product/index.html')
+    return render (request, 'appadmin/product/index.html')
 
 @login_required
 def profile(request):
@@ -28,7 +28,7 @@ def profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your profile has been update')
-            return redirect('profile_admin')
+            return redirect('profile')
     else:
         user_form = UserForm(instance=request.user)
         profile_form = UserProfileForm(instance=userprofile)
@@ -38,5 +38,14 @@ def profile(request):
         'profile_form': profile_form,
         'userprofile': userprofile
     }
-    return render (request, 'admin/profile/profile_edit.html', context)
+    return render (request, 'appadmin/profile/profile_edit.html', context)
 
+@login_required
+def customers(request):
+
+    customer = UserProfile.objects.all().filter(user__is_admin="False", user__is_active="True")[:4]
+    context = {
+        'customer': customer
+    }
+
+    return render(request, 'appadmin/customer/index.html', context)

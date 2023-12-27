@@ -126,6 +126,7 @@ def login(request):
             print(user.is_admin)
             
             if user.is_admin == True:
+                messages.success(request, 'You are now logged in.')
                 return redirect('dashboard_admin')
             
             try:
