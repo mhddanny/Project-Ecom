@@ -1,0 +1,196 @@
+{% extends 'appadmin/base.html' %}
+{% load static %}
+{% block title %}
+    Admin | Product All
+{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="header bg-primary">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center">
+            <div class="col-lg-10 col-8">
+                <nav aria-label="breadcrumb" class="d-md-inline-block">
+                    <ol class="breadcrumb ">
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><i class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item active"><a href="{% url 'products' %}">Product</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"> Add</li>
+                    </ol>
+                </nav>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-8">
+            <form action="" method="POST" enctype="multipart/form-data">
+                                
+                {% csrf_token %}
+                <div class="card">
+                <div class="card-header pb-0">
+                    <div class="d-flex align-items-center">
+                    <p class="mb-0">Add Product</p>
+                    <button class="btn btn-primary btn-sm ms-auto" type="submit">Settings</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="text-uppercase text-sm">Product Information</p>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Name Product</label>
+                            <input class="form-control" type="text" placeholder="Nama Product" >
+                        </div>
+                        <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Description</label>
+                            <input class="form-control" type="text" placeholder="Short Description" >
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleDataList" class="form-label">Caregory</label>
+                            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+                            <datalist id="datalistOptions">
+                                <option value="San Francisco">
+                                <option value="New York">
+                                <option value="Seattle">
+                                <option value="Los Angeles">
+                                <option value="Chicago">
+                            </datalist>
+                        </div>  
+                        <div class="form-group">
+                            <label for="example-text-input" class="form-control-label">Long Description</label>
+                            <textarea class="form-control" type="textarea" id="editor"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="formFile" class="form-label">Image Utama</label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Harga</label>
+                                <input class="form-control" type="number" placeholder="Harga">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Stock</label>
+                                <input class="form-control" type="number" placeholder="Stock">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <hr class="horizontal dark">
+                    <div class="row align-items-center">
+                        <div class="col-lg-10 col-8">
+                            <p class="text-uppercase text-sm">Variation</p>
+                        </div>
+                        <div class="col-lg-2 col-4">
+                            <a href="#" type="button" class="btn bg-gradient-primary font-weight-bold text-white">
+                                <i class="fas fa-plus-circle me-1"></i>Add
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                    
+                    </div>
+                    <hr class="horizontal dark">
+                    <p class="text-uppercase text-sm">Pengiriman</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Berat</label>
+                                <input class="form-control" type="number" placeholder="gram">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Panjang</label>
+                                <input class="form-control" type="number" placeholder="Cm">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Lebar</label>
+                                <input class="form-control" type="number" placeholder="Cm">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Tinggi</label>
+                                <input class="form-control" type="number" placeholder="Cm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-profile">
+                <img src="{% static 'admin/img/bg-profile.jpg' %}" alt="Image placeholder" class="card-img-top">
+                <div class="row justify-content-center">
+                    <div class="col-4 col-lg-4 order-lg-2">
+                        <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                            <a href="javascript:;">
+                            <img src="{% static 'admin/img/team-2.jpg' %}" class="rounded-circle img-fluid border border-2 border-white">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+                    <div class="d-flex justify-content-between">
+                        <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Connect</a>
+                        <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
+                        <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Message</a>
+                        <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-center">
+                            <div class="d-grid text-center">
+                                <span class="text-lg font-weight-bolder">22</span>
+                                <span class="text-sm opacity-8">Friends</span>
+                            </div>
+                            <div class="d-grid text-center mx-4">
+                                <span class="text-lg font-weight-bolder">10</span>
+                                <span class="text-sm opacity-8">Photos</span>
+                            </div>
+                            <div class="d-grid text-center">
+                                <span class="text-lg font-weight-bolder">89</span>
+                                <span class="text-sm opacity-8">Comments</span>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <h5>
+                            Mark Davis<span class="font-weight-light">, 35</span>
+                        </h5>
+                        <div class="h6 font-weight-300">
+                            <i class="ni location_pin mr-2"></i>Bucharest, Romania
+                        </div>
+                        <div class="h6 mt-4">
+                            <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+                        </div>
+                        <div>
+                            <i class="ni education_hat mr-2"></i>University of Computer Science
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/super-build/ckeditor.js"></script>

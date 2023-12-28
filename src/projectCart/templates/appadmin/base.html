@@ -20,6 +20,9 @@
         <link href="{% static 'appadmin/css/nucleo-svg.css' %}" rel="stylesheet" />
         <!-- CSS Files -->
         <link id="pagestyle" href="{% static 'appadmin/css/argon-dashboard.css' %}" rel="stylesheet" />
+
+        <!-- Specific CSS goes HERE -->
+        {% block stylesheets %}{% endblock stylesheets %}
     </head>
 
     <body class="g-sidenav-show   bg-gray-100">
@@ -211,6 +214,9 @@
         <!-- Github buttons -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+
+        <!-- Specific JS goes HERE --> 
+        {% block javascripts %}{% endblock javascripts %}
         
         <script src="{% static 'appadmin/js/argon-dashboard.min.js' %}"></script>
     </body>

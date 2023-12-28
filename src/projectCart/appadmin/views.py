@@ -33,6 +33,13 @@ def products(request):
     return render(request, 'appadmin/product/index.html', context)
 
 @login_required
+def add_product(request):
+
+
+    context = {}
+    return render(request, 'appadmin/product/add_product.html', context)
+
+@login_required
 def profile(request):
     userprofile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
