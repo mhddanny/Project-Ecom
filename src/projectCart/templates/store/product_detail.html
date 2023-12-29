@@ -40,7 +40,7 @@
                                     <i class="fa fa-star{% if single_product.avrageReview < 3.5 %}-o{% elif single_product.avrageReview >= 3.5 and single_product.avrageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
                                     <i class="fa fa-star{% if single_product.avrageReview < 4.5 %}-o{% elif single_product.avrageReview >= 4.5 and single_product.avrageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
                                     <small class="label-rating text-muted ml-3">{{product_view}} reviews</small>
-                                    <small class="label-rating text-muted ml-3">{{single_product.countReview}} Ulasan</small>
+                                    <small class="label-rating text-muted ml-3">200 Like</small>
                                     <small class="label-rating text-success ml-3"> <i class="fas fa-clipboard-check"></i> {{quantityAll}} orders </small>
                                 </span>
                             </div>
@@ -81,11 +81,11 @@
 
                             <div class="text-center py-3">
                                 <a href="{% url 'user_wislist' single_product.id %}" class="btn  btn-light">
-                                    {% if single_product.users_wislist.all %}
+                                    <!-- {% if single_product.users_wislist.all %}
                                     <i class="fas fa-heart" style="color: #3167eb;;"></i>  
                                     {% else %}
                                     <i class="fas fa-heart"></i>  
-                                    {% endif %}
+                                    {% endif %} -->
                                 </a>
                                 {% if single_product.stock <= 0 %}
                                     <h6 class="text-danger"> Out Of Stock </h6>
