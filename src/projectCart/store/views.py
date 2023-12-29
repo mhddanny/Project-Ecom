@@ -6,7 +6,7 @@ from django.contrib import messages
 from category.models import Category
 from carts.views import _cart_id
 from carts.models import CartItem
-from . models import Product, ReviewRating, ProductGallery
+from . models import Product, ReviewRating, ProductGallery, ViewCount
 from . forms import ReviewForm
 from orders.models import OrderProduct
 from django.db.models import Sum
@@ -54,11 +54,20 @@ def product_detail(request, category_slug, product_slug):
     # OrderProduct
     quantityAll = OrderProduct.objects.filter(product=single_product.id).aggregate(s=Sum('quantity'))['s']
 
-    # Get The reviews
+    # Get The Rating reviews
     reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
 
     #Get The Product Gallery
     product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
+
+    #Get the check ip client review
+    ip=request.META['REMOTE_ADDR']
+    if not ViewCount.objects.filter(product=single_product, session=request.session.session_key):
+        view = ViewCount(product=single_product, ip_address=ip, session=request.session.session_key)
+        view.save()
+
+    #Get the reviews product
+    product_view = ViewCount.objects.filter(product=single_product).count()
 
     context = {
         'single_product': single_product,
@@ -68,6 +77,7 @@ def product_detail(request, category_slug, product_slug):
         'product_gallery': product_gallery,
         'products': products,
         'quantityAll': quantityAll,
+        'product_view': product_view,
         }
 
     return render(request, 'store/product_detail.html', context)

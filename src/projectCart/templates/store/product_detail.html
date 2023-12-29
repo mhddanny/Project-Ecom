@@ -39,7 +39,8 @@
                                     <i class="fa fa-star{% if single_product.avrageReview < 2.5 %}-o{% elif single_product.avrageReview >= 2.5 and single_product.avrageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
                                     <i class="fa fa-star{% if single_product.avrageReview < 3.5 %}-o{% elif single_product.avrageReview >= 3.5 and single_product.avrageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
                                     <i class="fa fa-star{% if single_product.avrageReview < 4.5 %}-o{% elif single_product.avrageReview >= 4.5 and single_product.avrageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-                                    <small class="label-rating text-muted ml-3">{{single_product.countReview}} reviews</small>
+                                    <small class="label-rating text-muted ml-3">{{product_view}} reviews</small>
+                                    <small class="label-rating text-muted ml-3">{{single_product.countReview}} Ulasan</small>
                                     <small class="label-rating text-success ml-3"> <i class="fas fa-clipboard-check"></i> {{quantityAll}} orders </small>
                                 </span>
                             </div>
@@ -179,7 +180,7 @@
                                 <i class="fa fa-star{% if single_product.avrageReview < 2.5 %}-o{% elif single_product.avrageReview >= 2.5 and single_product.avrageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
                                 <i class="fa fa-star{% if single_product.avrageReview < 3.5 %}-o{% elif single_product.avrageReview >= 3.5 and single_product.avrageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
                                 <i class="fa fa-star{% if single_product.avrageReview < 4.5 %}-o{% elif single_product.avrageReview >= 4.5 and single_product.avrageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-                                <small class="text-muted ml-3"> {{single_product.countReview}} reviews</small>
+                                <small class="text-muted ml-3"> {{single_product.countReview}} Comment</small>
 
                             </span>
                         </div>
