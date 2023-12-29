@@ -109,12 +109,7 @@ class ViewCount(models.Model):
     product = models.ForeignKey(Product, related_name="product_views",on_delete=models.CASCADE)
     ip_address = models.CharField(max_length=50)
     session = models.CharField(max_length=50)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="product_liked", blank=True)
-
+    
     def __str__(self):
         return self.ip_address
-
-    def num_likes(self):
-        return self.likes.count()
-
 

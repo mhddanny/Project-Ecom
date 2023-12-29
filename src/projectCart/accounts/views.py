@@ -404,7 +404,7 @@ def add_to_wislist(request, id):
         messages.success(request, 'Remove ' + product.product_name + 'to your wishlist')
     else:
         product.users_wislist.add(request.user)
-        messages.success(request, product.product_name + 'Has been removed from your wishlist')
+        messages.success(request, product.product_name + ' Has been success from your wishlist')
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 @login_required(login_url='login')
