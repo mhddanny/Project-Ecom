@@ -105,5 +105,11 @@ class ProductPaket(models.Model):
         verbose_name = 'Product Paket'
         verbose_name_plural = 'Product Paket'
 
+class ViewCount(models.Model):
+    product = models.ForeignKey(Product, related_name="product_views",on_delete=models.CASCADE)
+    ip_address = models.CharField(max_length=50)
+    session = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.ip_address
 
