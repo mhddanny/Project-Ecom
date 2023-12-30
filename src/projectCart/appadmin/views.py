@@ -8,6 +8,7 @@ from accounts.models import UserProfile
 from store.models import Product
 
 from . forms import UserForm, UserProfileForm
+from . forms import UserProductForm
 
 
 @login_required
@@ -34,9 +35,11 @@ def products(request):
 
 @login_required
 def add_product(request):
+    product_form = UserProductForm()
 
-
-    context = {}
+    context = {
+        'product': product_form
+    }
     return render(request, 'appadmin/product/add_product.html', context)
 
 @login_required

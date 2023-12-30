@@ -21,6 +21,8 @@ urlpatterns = [
     path('', include('chat.urls')),
     #admin
     path('app-admin/', include('appadmin.urls')),
+
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ] 
 
 if settings.DEBUG:
