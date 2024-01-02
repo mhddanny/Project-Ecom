@@ -18,7 +18,7 @@
                     <ol class="breadcrumb ">
                         <li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><i class="fas fa-home"></i></a></li>
                         <li class="breadcrumb-item active"><a href="{% url 'products' %}">Product</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> Add</li>
+                        <li class="breadcrumb-item active" aria-current="page"> {{title}}</li>
                     </ol>
                 </nav>
             </div>
@@ -30,108 +30,114 @@
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-md-8">
-            <form action="" method="POST" enctype="multipart/form-data">
-                                
+            <form action="." method="POST" enctype="multipart/form-data">                
                 {% csrf_token %}
                 <div class="card">
-                <div class="card-header pb-0">
-                    <div class="d-flex align-items-center">
-                    <p class="mb-0">Add Product</p>
-                    <button class="btn btn-primary btn-sm ms-auto" type="submit">Settings</button>
+                    <div class="card-header pb-0">
+                        <div class="d-flex align-items-center">
+                        <p class="mb-0">{{title}} Product</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <p class="text-uppercase text-sm">Product Information</p>
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Name Product</label>
-                            <input class="form-control" type="text" placeholder="Nama Product" >
-                        </div>
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Description</label>
-                            <input class="form-control" type="text" placeholder="Short Description" >
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleDataList" class="form-label">Caregory</label>
-                            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
-                            <datalist id="datalistOptions">
-                                <option value="San Francisco">
-                                <option value="New York">
-                                <option value="Seattle">
-                                <option value="Los Angeles">
-                                <option value="Chicago">
-                            </datalist>
-                        </div>  
-                        <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Long Description</label><br>
-                            <!-- <textarea class="form-control" type="textarea" id="editor"></textarea> -->
-                            {{ myform.media }}
-                            {{product.long_description}}
-                        </div>
-                        <div class="form-group">
-                            <label for="formFile" class="form-label">Image Utama</label>
-                            <input class="form-control" type="file" id="formFile">
-                        </div>
-                        <div class="col-md-6">
+                    <div class="card-body">
+                        <p class="text-uppercase text-sm">Product Information</p>
+                        <div class="row">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Harga</label>
-                                <input class="form-control" type="number" placeholder="Harga">
+                                <label for="example-text-input" class="form-control-label">Name Product</label>
+                                <!-- <input class="form-control" type="text" placeholder="Nama Product" > -->
+                                {{product.product_name}}
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Description</label>
+                                <!-- <input class="form-control" type="text" placeholder="Short Description" > -->
+                                {{product.description}}
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleDataList" class="form-label">Caregory</label>
+                                {{product.category}}
+                            </div>  
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Long Description</label><br>
+                                <!-- <textarea class="form-control" type="textarea" id="editor"></textarea> -->
+                                {{ myform.media }}
+                                {{product.long_description}}
+                            </div>
+                            <div class="form-group">
+                                <label for="formFile" class="form-label">Image Utama</label>
+                                <!-- <input class="form-control" type="file" id="formFile"> -->
+                                <!-- <img src="{{product.images.url}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
+                                {{product.images}}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Harga</label>
+                                    <!-- <input class="form-control" type="number" placeholder="Harga"> -->
+                                    {{product.price}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Stock</label>
+                                    <!-- <input class="form-control" type="number" placeholder="Stock"> -->
+                                    {{product.stock}}
+                                </div>
+                            </div>   
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="formFile" class="form-label">Is Active</label>
+                            {{product.is_available}}
+                        </div> -->
+                        <hr class="horizontal dark">
+                        <div class="row align-items-center">
+                            <div class="col-lg-10 col-8">
+                                <p class="text-uppercase text-sm">Variation</p>
+                            </div>
+                            <div class="col-lg-2 col-4">
+                                <a href="#" type="button" class="btn bg-gradient-primary font-weight-bold text-white">
+                                    <i class="fas fa-plus-circle me-1"></i>Add
+                                </a>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Stock</label>
-                                <input class="form-control" type="number" placeholder="Stock">
-                            </div>
-                        </div>
+                        <div class="row">
                         
-                    </div>
-                    <hr class="horizontal dark">
-                    <div class="row align-items-center">
-                        <div class="col-lg-10 col-8">
-                            <p class="text-uppercase text-sm">Variation</p>
                         </div>
-                        <div class="col-lg-2 col-4">
-                            <a href="#" type="button" class="btn bg-gradient-primary font-weight-bold text-white">
-                                <i class="fas fa-plus-circle me-1"></i>Add
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row">
-                    
-                    </div>
-                    <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">Pengiriman</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Berat</label>
-                                <input class="form-control" type="number" placeholder="gram">
+                        <hr class="horizontal dark">
+                        <p class="text-uppercase text-sm">Pengiriman</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Berat</label>
+                                    {{paket.weight}}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Panjang</label>
-                                <input class="form-control" type="number" placeholder="Cm">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Panjang</label>
+                                    {{paket.length}}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Lebar</label>
+                                    {{paket.width}}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Tinggi</label>
+                                    {{paket.height}}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Lebar</label>
-                                <input class="form-control" type="number" placeholder="Cm">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Tinggi</label>
-                                <input class="form-control" type="number" placeholder="Cm">
-                            </div>
+                        <hr class="horizontal dark">
+                        
+                        <div class="row">
+                            <button class="btn btn-primary btn-sm ms-auto" type="submit">Submit</button>
                         </div>
                     </div>
-                </div>
                 </div>
             </form>
         </div>

@@ -71,12 +71,14 @@
                                         <div class="form-check form-switch text-center" >
                                             <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" style="height: 20px;" checked ="">
                                             <label class="form-check-label" for="flexSwitchCheckDefault">{{obj.is_available}}</label>
-                                          </div>
-                                        <!-- <span class="badge badge-sm bg-gradient-success">{{obj.is_available}}</span> -->
+                                        </div>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                            Edit
+                                        <a href="{% url 'edit_product' obj.id %}" class="btn btn-sm bg-gradient-secondary mt-2 mb-1" data-toggle="tooltip" data-original-title="Edit Product">
+                                            <i class="far fa-edit"></i>
+                                        </a><br>
+                                        <a href="{% url 'delete_product' obj.id %}" class="btn btn-sm bg-gradient-danger" data-toggle="tooltip" data-original-title="Delete Product" onclick="return confirm('Are you sure want to delete {{obj.product_name}}')">
+                                            <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
                                 </tr>

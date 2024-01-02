@@ -55,4 +55,4 @@ admin.site.register(Variation, VariationAdmin)
 
 admin.site.register(ReviewRating)
 admin.site.register(ProductGallery)
-# admin.site.register(ProductPaket)
+admin.site.register(ProductPaket)

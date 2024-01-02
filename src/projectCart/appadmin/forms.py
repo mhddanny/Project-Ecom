@@ -31,14 +31,54 @@ class UserCategoryForm(forms.ModelForm):
         fields = '__all__'
 
 class UserProductForm(forms.ModelForm):
+    # is_available = forms.BooleanField(
+    #     required=True,
+    #     disabled = False,
+    #     widget=forms.widgets.CheckboxInput( 
+    #         attrs={'class': 'checkbox-inline'}  
+    #         ), 
+    #     help_text = "I accept the terms in the License Agreement", 
+    #     error_messages ={'required':'Please check the box'} 
+    # )
+    # images = forms.ImageField(required=False, error_messages={ 'invalid':("Image files only") }, widget=forms.FileInput)
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ('product_name', 'description', 'long_description', 'price', 'images', 'stock', 'category',)
+
+    def __init__(self, *args, **kwargs):
+        super(UserProductForm,self).__init__(*args, **kwargs)
+        self.fields["product_name"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Name", "required": "True" }
+        )
+        self.fields["description"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Short Description", "required": "True", "rows":"2","cols":"50" }
+        )
+        # self.fields['is_available'].widget = forms. CheckboxInput(initial=True)
+        
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
 
 class UserProductPaketForm(forms.ModelForm):
+
     class Meta:
         model = ProductPaket
-        fields = '__all__'
+        fields = ('weight', 'length', 'width', 'height',)
+
+    def __init__(self, *args, **kwargs):
+        super(UserProductPaketForm,self).__init__(*args, **kwargs)
+        self.fields["weight"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "...gram", "required": "True" }
+        )
+        self.fields["length"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "...cm", "required": "True" }
+        )
+        self.fields["width"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "...cm", "required": "True" }
+        )
+        self.fields["height"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "...cm", "required": "True" }
+        )
+
 
 class UserProductGaleryForm(forms.ModelForm):
     class Meta:
