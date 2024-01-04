@@ -1,13 +1,18 @@
 from django.db import models
 from django.urls import reverse
 from django.core.validators import FileExtensionValidator
+from mptt.models import MPTTModel, TreeForeignKey
 
-class Category(models.Model):
+class Category(MPTTModel):
     category_name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(max_length=255, blank=True)
     cat_image = models.ImageField(upload_to='photos/category', blank=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
     video_file = models.FileField(upload_to='videos/category', blank=True, validators=[FileExtensionValidator(allowed_extensions=['mp4'])])
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    class MPTTMeta:
+        order_insertion_by = ['category_name']
 
     class Meta:
         verbose_name = 'category'
