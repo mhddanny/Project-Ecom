@@ -62,12 +62,7 @@
                                 {{ myform.media }}
                                 {{product.long_description}}
                             </div>
-                            <div class="form-group">
-                                <label for="formFile" class="form-label">Image Utama</label>
-                                <!-- <input class="form-control" type="file" id="formFile"> -->
-                                <!-- <img src="{{product.images.url}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
-                                {{product.images}}
-                            </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="example-text-input" class="form-control-label">Harga</label>
@@ -87,6 +82,29 @@
                             <label for="formFile" class="form-label">Is Active</label>
                             {{product.is_available}}
                         </div> -->
+                        
+                        <hr class="horizontal dark">
+                        <p class="text-uppercase text-sm">Product Images</p>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="formFile" class="form-label">Image Utama</label>
+                                <!-- <input class="form-control" type="file" id="formFile"> -->
+                                <!-- <img src="{{product.images}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
+                                {{product.images}}
+                            </div>
+                            <div class="form-group">
+                                <label for="formFile" class="form-label">Images</label>
+                                {{product_images.management_form}}
+                                {% if title == 'Edit' %}
+                                    {% for f in product_images %}
+                                        {{f.image}}<br>
+                                    {% endfor %}
+                                {% else %}
+                                    {{product_images.image}}
+                                {% endif %}
+                            </div>
+                        </div>
+
                         <hr class="horizontal dark">
                         <div class="row align-items-center">
                             <div class="col-lg-10 col-8">

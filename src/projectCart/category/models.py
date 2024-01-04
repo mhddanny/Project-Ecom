@@ -18,3 +18,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category_name
+
+    def delete(self):
+        self.cat_image.delete()
+        self.video_file.delete()
+        super().delete()

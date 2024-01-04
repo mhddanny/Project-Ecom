@@ -4,6 +4,23 @@ from accounts.models import Account, UserProfile
 from category.models import Category
 from store.models import Product, ProductPaket, ProductGallery, Variation
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = single_file_clean(data, initial)
+        return result
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = Account
@@ -29,6 +46,14 @@ class UserCategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(UserCategoryForm,self).__init__(*args, **kwargs)
+        self.fields["description"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Short Description", "required": "True", "rows":"2","cols":"50" }
+        )
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
 
 class UserProductForm(forms.ModelForm):
     # is_available = forms.BooleanField(
@@ -81,10 +106,17 @@ class UserProductPaketForm(forms.ModelForm):
 
 
 class UserProductGaleryForm(forms.ModelForm):
+    image = MultipleFileField()
+    
     class Meta:
         model = ProductGallery
-        fields = '__all__'
+        fields = ('image',)
 
+    def __init__(self, *args, **kwargs):
+        super(UserProductGaleryForm,self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+        
 class UserProductVariationForm(forms.ModelForm):
     class Meta:
         model = Variation

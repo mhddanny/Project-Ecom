@@ -1,5 +1,5 @@
 {% extends 'appadmin/base.html' %}
-
+{% load static %}
 {% block title %}
     Admin | Category All
 {% endblock title %}
@@ -8,22 +8,22 @@
 <div class="header bg-primary">
     <div class="container-fluid">
         <div class="header-body">
-        <div class="row align-items-center">
-            <div class="col-lg-10 col-8">
-                <nav aria-label="breadcrumb" class="d-md-inline-block">
-                    <ol class="breadcrumb ">
-                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item active"><a href="{% url 'category' %}">Category</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"> All</li>
-                    </ol>
-                </nav>
-            </div>
-            <div class="col-lg-2 col-4 text-left">
-                <a href="" type="button" class="btn bg-gradient-success font-weight-bold text-white">
-                    <i class="fas fa-plus-circle me-1"></i> Add Product
-                </a>
-            </div>
-            </div>
+          <div class="row align-items-center">
+              <div class="col-lg-10 col-8">
+                  <nav aria-label="breadcrumb" class="d-md-inline-block">
+                      <ol class="breadcrumb ">
+                          <li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><i class="fas fa-home"></i></a></li>
+                          <li class="breadcrumb-item active"><a href="{% url 'category' %}">Category</a></li>
+                          <li class="breadcrumb-item active" aria-current="page"> All</li>
+                      </ol>
+                  </nav>
+              </div>
+              <div class="col-lg-2 col-4 text-left">
+                  <a href="{% url 'add_category' %}" type="button" class="btn bg-gradient-success font-weight-bold text-white">
+                      <i class="fas fa-plus-circle me-1"></i> Add Product
+                  </a>
+              </div>
+          </div>
         </div>
     </div>
 </div>
@@ -46,26 +46,28 @@
                         </tr>
                       </thead>
                       <tbody>
-                        {% for obj in category %}
+                        {% for cat in category %}
                         <tr>
                           <td>
                             <div class="d-flex px-2">
                               <div>
-                                <img src="category.cat_image.url" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
+                                <img src="{{cat.cat_image.url}}" class="avatar avatar-sm rounded-circle me-2" alt="spotify">
                               </div>
                               <div class="my-auto">
-                                <h6 class="mb-0 text-sm">Spotify</h6>
+                                <h6 class="mb-0 text-sm">{{cat.category_name}}</h6>
                               </div>
                             </div>
                           </td>
                           <td>
-                          <td>
-                            <span class="text-xs font-weight-bold">working</span>
+                            <span class="text-xs font-weight-bold">{{cat.description}}</span>
                           </td>
                           <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0">
-                              <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                            </button>
+                            <a href="{% url 'edit_category' cat.slug cat.id %}" class="btn btn-link text-secondary mb-0">
+                              <i class="far fa-edit text-xs" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="btn btn-link text-secondary mb-0">
+                              <i class="fas fa-trash-alt text-xs" aria-hidden="true"></i>
+                            </a>
                           </td>
                         </tr>
                         {% endfor %}
